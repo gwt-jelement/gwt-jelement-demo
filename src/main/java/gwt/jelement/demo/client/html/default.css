@@ -1,0 +1,22 @@
+/** Add css rules here for your application. */
+
+/** Example rules used by the template application (remove for your app) */
+html {
+    height: 100%;
+}
+
+body {
+    font-family: "Segoe UI", "Tahoma", "Arial", "sans-serif";
+    font-size: 10pt;
+}
+#demo-listing{
+    line-height: 1.4;
+    padding-top: 100px;
+}
+#demo-listing a {
+    display: block;
+}
+
+.container {
+    width: 100%;
+}
