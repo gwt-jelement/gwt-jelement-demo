@@ -13,11 +13,11 @@ public abstract class AbstractDemo {
         demoFrame.innerHTML = getTemplate().getText();
         execute();
 
-        double contentHeight = demoFrame.getOffsetHeight();
+        double contentHeight = demoFrame.offsetHeight;
                 HTMLPreElement sourceContainer = (HTMLPreElement) document.createElement("pre");
         sourceContainer.innerText = getSource().getText();
-        sourceContainer.getStyle().setProperty("height", "calc(100vh - " + (contentHeight + 20) + "px)");
-        sourceContainer.getStyle().setProperty("overflow", "auto");
+        sourceContainer.style.setProperty("height", "calc(100vh - " + (contentHeight + 20) + "px)");
+        sourceContainer.style.setProperty("overflow", "auto");
         sourceContainer.className="lang-Java";
         demoFrame.appendChild(sourceContainer);
         HighlightJs.highlightBlock(sourceContainer);

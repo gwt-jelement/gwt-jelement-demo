@@ -31,16 +31,16 @@ public class WebAudioDemo extends AbstractDemo {
         btnSoundOn.addClickListener((Event event) -> {
             audioContext = new AudioContext();
             osc = audioContext.createOscillator();
-            osc.type = OscillatorType.SINE;
-            osc.connect(audioContext.getDestination(), 0);
-            osc.getFrequency().value = 650;
+            osc.setType(OscillatorType.SINE);
+            osc.connect(audioContext.destination, 0);
+            osc.frequency.value = 650;
 
             gain = audioContext.createGain();
-            gain.getGain().value = 100;
-            gain.connect(osc.getFrequency());
+            gain.gain.value = 100;
+            gain.connect(osc.frequency);
 
             osc2 = audioContext.createOscillator();
-            osc2.getFrequency().value = 1.1f;
+            osc2.frequency.value = 1.1f;
             osc2.connect(gain);
 
             osc.start();
@@ -50,12 +50,12 @@ public class WebAudioDemo extends AbstractDemo {
             btnSoundOff.setDisabled(false);
         });
         btnSoundOff.addClickListener(event -> {
-            osc.stop(audioContext.getCurrentTime() + 1);
+            osc.stop(audioContext.currentTime + 1);
             osc2.stop();
             osc.disconnect();
             osc2.disconnect();
             gain.disconnect();
-            if (audioContext.getStateAsAudioContextState() != AudioContextState.CLOSED) {
+            if (audioContext.getState() != AudioContextState.CLOSED) {
                 audioContext.close();
             }
             btnSoundOff.setDisabled(true);
