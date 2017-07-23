@@ -2,6 +2,7 @@ package gwt.jelement.demo.client;
 
 
 import com.google.gwt.resources.client.TextResource;
+import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.html.HTMLDivElement;
 import gwt.jelement.html.HTMLPreElement;
 
@@ -10,7 +11,7 @@ import static gwt.jelement.Browser.document;
 public abstract class AbstractDemo {
 
     public final void execute(HTMLDivElement demoFrame) {
-        demoFrame.innerHTML = getTemplate().getText();
+        demoFrame.innerHTML = getTemplate().getText()+ HtmlClientBundle.INSTANCE.getGithubBanner().getText();
         execute();
 
         double contentHeight = demoFrame.offsetHeight;

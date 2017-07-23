@@ -15,6 +15,9 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("canvas2d.html")
     TextResource getCanvas2DHtml();
 
+    @Source("github-banner.html")
+    TextResource getGithubBanner();
+
     @CssResource.NotStrict
     @Source("default.css")
     CssResource getStyle();
