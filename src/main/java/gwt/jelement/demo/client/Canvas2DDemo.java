@@ -18,21 +18,21 @@ public class Canvas2DDemo extends AbstractDemo {
     protected void execute() {
         clockDemo();
 
-        HTMLCanvasElement canvas = (HTMLCanvasElement) document.getElementById("my-canvas");
-        CanvasRenderingContext2D context = (CanvasRenderingContext2D) canvas.getContext("2d");
+        HTMLCanvasElement canvas = document.getElementById("my-canvas");
+        CanvasRenderingContext2D context = canvas.getContext("2d");
 
-        context.fillStyle = CanvasRenderingContext2D.StringOrCanvasGradientOrCanvasPatternUnionType.of("green");
+        context.setFillStyle("green");
         context.fillRect(10, 10, 150, 150);
 
         context.beginPath();
-        context.fillStyle = CanvasRenderingContext2D.StringOrCanvasGradientOrCanvasPatternUnionType.of("yellow");
+        context.setFillStyle("yellow");
         context.ellipse(50, 50, 25, 25, 0, 0, (float) (Math.PI * 2));
         context.fill();
     }
 
     private void clockDemo() {
-        HTMLCanvasElement clockCanvas = (HTMLCanvasElement) document.getElementById("clock-canvas");
-        CanvasRenderingContext2D context = (CanvasRenderingContext2D) clockCanvas.getContext("2d");
+        HTMLCanvasElement clockCanvas = document.getElementById("clock-canvas");
+        CanvasRenderingContext2D context = clockCanvas.getContext("2d");
         window.setInterval(new Function() {
             @Override
             public Object callback(Object... objects) {
@@ -52,20 +52,20 @@ public class Canvas2DDemo extends AbstractDemo {
                     public void handleEvent(double v) {
                         context.clearRect(0, 0, 200, 200);
                         context.beginPath();
-                        context.strokeStyle = CanvasRenderingContext2D.StringOrCanvasGradientOrCanvasPatternUnionType.of("black");
+                        context.setStrokeStyle("black");
                         context.lineWidth = 4;
                         context.moveTo(100, 100);
                         context.lineTo(hoursX, hoursY);
                         context.stroke();
                         context.beginPath();
-                        context.strokeStyle = CanvasRenderingContext2D.StringOrCanvasGradientOrCanvasPatternUnionType.of("gray");
+                        context.setStrokeStyle("gray");
                         context.lineWidth = 3;
                         context.moveTo(100, 100);
                         context.lineTo(minX, minY);
                         context.stroke();
                         context.beginPath();
                         context.lineWidth = 1;
-                        context.strokeStyle = CanvasRenderingContext2D.StringOrCanvasGradientOrCanvasPatternUnionType.of("red");
+                        context.setStrokeStyle("red");
                         context.moveTo(100, 100);
                         context.lineTo(secX, secY);
                         context.stroke();

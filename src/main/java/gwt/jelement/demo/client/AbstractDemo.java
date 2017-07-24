@@ -12,7 +12,11 @@ public abstract class AbstractDemo {
 
     public final void execute(HTMLDivElement demoFrame) {
         demoFrame.innerHTML = getTemplate().getText()+ HtmlClientBundle.INSTANCE.getGithubBanner().getText();
-        execute();
+        try {
+            execute();
+        }catch(Exception e){
+            //TODO something clever here
+        }
 
         double contentHeight = demoFrame.offsetHeight;
                 HTMLPreElement sourceContainer = (HTMLPreElement) document.createElement("pre");

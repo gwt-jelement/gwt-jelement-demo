@@ -3,13 +3,20 @@
 <p>This is a demo of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank">
     Canvas API<a>.</p>
 
-<canvas width="200" height="200" id="my-canvas"></canvas>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"><canvas width="200" height="200" id="my-canvas"></canvas></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4"><canvas width="200" height="200" id="clock-canvas"></canvas></div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
 
-<canvas width="200" height="200" id="clock-canvas"></canvas>
+
+<
 
 <style>
 #clock-canvas{
-    margin-left:100px;
     background-image: url("clock.png");
     background-repeat: no-repeat;
 }
