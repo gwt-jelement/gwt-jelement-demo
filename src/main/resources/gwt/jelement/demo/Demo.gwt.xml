@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module rename-to='js'>
+<module rename-to="js">
 
-  <inherits name='com.google.gwt.user.User' />
-  <inherits name='com.google.gwt.user.theme.standard.Standard' />
-  <inherits name='gwt.jelement.JElement' />
+  <inherits name="com.google.gwt.user.User" />
+  <inherits name="com.google.gwt.user.theme.standard.Standard" />
+  <inherits name="gwt.jelement.JElement" />
 
-  <entry-point class='gwt.jelement.demo.client.Demo' />
+  <entry-point class="gwt.jelement.demo.client.Demo" />
 
-  <source path='client' />
+  <source path="client" />
+  <resource path="client" />
 
 </module>

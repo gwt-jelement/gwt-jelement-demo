@@ -30,11 +30,11 @@ public class BootstrapButton {
 
     public BootstrapButton(String caption, ButtonStyle buttonStyle, ButtonSize buttonSize, String icon) {
         this.button = document.createElement("button");
-        button.className = "btn btn-" + buttonStyle.name().toLowerCase() +
-                (buttonSize != null && buttonSize != ButtonSize.DEFAULT ? (" " + buttonSize.getStyle()) : "");
+        button.setClassName("btn btn-" + buttonStyle.name().toLowerCase() +
+                (buttonSize != null && buttonSize != ButtonSize.DEFAULT ? (" " + buttonSize.getStyle()) : ""));
         if (icon != null) {
             Element span = document.createElement("span");
-            span.className = "glyphicon glyphicon-" + icon;
+            span.setClassName("glyphicon glyphicon-" + icon);
             span.setAttribute("aria-hidden", "true");
             button.appendChild(span);
         }
@@ -61,7 +61,7 @@ public class BootstrapButton {
     }
 
     public void setCaption(String caption){
-        textNode.textContent=caption;
+        textNode.setTextContent(caption);
     }
 
     public void appendTo(Element element){

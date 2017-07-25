@@ -15,7 +15,9 @@ body {
 #demo-listing a {
     display: block;
 }
-
+#demo-div{
+    padding: 0;
+}
 .container {
     width: 100%;
 }

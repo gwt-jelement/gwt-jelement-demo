@@ -37,9 +37,9 @@ public class Canvas2DDemo extends AbstractDemo {
             @Override
             public Object callback(Object... objects) {
                 Date time = new Date();
-                double hours = (double)(time.getHours() % 12) +time.getMinutes()/60d;
-                double minutes = time.getMinutes() + time.getSeconds()/60d;
-                double seconds = time.getSeconds()+(time.getTime()%1000)/1000d;
+                double hours = (double) (time.getHours() % 12) + time.getMinutes() / 60d;
+                double minutes = time.getMinutes() + time.getSeconds() / 60d;
+                double seconds = time.getSeconds() + (time.getTime() % 1000) / 1000d;
                 double offset = -Math.PI / 2;
                 float hoursX = (float) (75 * Math.cos(Math.PI * 2 * hours / 12 + offset) + 100);
                 float hoursY = (float) (75 * Math.sin(Math.PI * 2 * hours / 12 + offset) + 100);
@@ -53,18 +53,18 @@ public class Canvas2DDemo extends AbstractDemo {
                         context.clearRect(0, 0, 200, 200);
                         context.beginPath();
                         context.setStrokeStyle("black");
-                        context.lineWidth = 4;
+                        context.setLineWidth(4);
                         context.moveTo(100, 100);
                         context.lineTo(hoursX, hoursY);
                         context.stroke();
                         context.beginPath();
                         context.setStrokeStyle("gray");
-                        context.lineWidth = 3;
+                        context.setLineWidth(3);
                         context.moveTo(100, 100);
                         context.lineTo(minX, minY);
                         context.stroke();
                         context.beginPath();
-                        context.lineWidth = 1;
+                        context.setLineWidth(1);
                         context.setStrokeStyle("red");
                         context.moveTo(100, 100);
                         context.lineTo(secX, secY);

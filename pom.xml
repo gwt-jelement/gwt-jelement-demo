@@ -68,7 +68,7 @@
 
         <plugins>
 
-            <!-- Mojo's Maven Plugin for GWT -->
+            <!-- Mojo"s Maven Plugin for GWT -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>

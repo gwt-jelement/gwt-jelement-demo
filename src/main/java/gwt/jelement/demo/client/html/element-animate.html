@@ -1,0 +1,28 @@
+<style>
+    div.clouds {
+        background-image: url("clouds.jpg");
+        background-repeat: repeat;
+        height: 400px;
+        max-height: 200px;
+        width: 100%;
+        padding: 0;
+        will-change: transform;
+    }
+    div.ticker{
+        display: inline-block;
+        overflow: hidden;
+        width: calc(100% - 550px);
+        position: absolute;
+        left: 250px;
+        top: 150px;
+    }
+    div.ticker-inner{
+        white-space: nowrap;
+        font-size: 12pt;
+        font-weight: bold;
+        margin: 0 0 0 0;
+        will-change: margin;
+    }
+</style>
+
+<div class="clouds"></div>

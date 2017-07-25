@@ -18,6 +18,9 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("github-banner.html")
     TextResource getGithubBanner();
 
+    @Source("element-animate.html")
+    TextResource getElementAnimateHtml();
+
     @CssResource.NotStrict
     @Source("default.css")
     CssResource getStyle();

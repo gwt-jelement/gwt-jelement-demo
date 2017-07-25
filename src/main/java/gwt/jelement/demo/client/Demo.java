@@ -1,17 +1,10 @@
 package gwt.jelement.demo.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import gwt.jelement.canvas2d.CanvasRenderingContext2D;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.dom.Element;
-import gwt.jelement.events.Event;
-import gwt.jelement.events.EventListener;
 import gwt.jelement.html.HTMLAnchorElement;
-import gwt.jelement.html.HTMLButtonElement;
-import gwt.jelement.html.HTMLCanvasElement;
 import gwt.jelement.html.HTMLDivElement;
-import gwt.jelement.webaudio.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,16 +26,17 @@ public class Demo implements EntryPoint {
         demoFrame = (HTMLDivElement) document.getElementById("demo-div");
 
         addDemo(new Canvas2DDemo());
+        addDemo(new ElementAnimateDemo());
         addDemo(new WebAudioDemo());
 
         window.addEventListener("hashchange", event -> {
-            hashChanged(location.hash);
+            hashChanged(location.getHash());
         });
-        hashChanged(location.hash);
+        hashChanged(location.getHash());
     }
 
     private void hashChanged(String hash) {
-        AbstractDemo demo = demoMap.get(location.hash);
+        AbstractDemo demo = demoMap.get(location.getHash());
         if (demo!=null){
             demo.execute(demoFrame);
         }
@@ -52,7 +46,7 @@ public class Demo implements EntryPoint {
         HTMLAnchorElement anchor= (HTMLAnchorElement) document.createElement("a");
         String hash = "#" + demo.getName();
         anchor.setAttribute("href", hash);
-        anchor.innerText=demo.getTitle();
+        anchor.setInnerText(demo.getTitle());
         listing.appendChild(anchor);
         demoMap.put(hash, demo);
     }

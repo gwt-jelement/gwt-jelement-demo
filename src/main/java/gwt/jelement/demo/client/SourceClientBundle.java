@@ -13,4 +13,7 @@ public interface SourceClientBundle extends ClientBundle {
 
     @Source("Canvas2DDemo.java")
     TextResource getCanvas2DDemoSource();
+
+    @Source("ElementAnimateDemo.java")
+    TextResource getElementAnimateDemoSource();
 }

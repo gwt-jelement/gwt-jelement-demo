@@ -1,29 +1,31 @@
 package gwt.jelement.demo.client;
 
 
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.html.HTMLDivElement;
 import gwt.jelement.html.HTMLPreElement;
 
 import static gwt.jelement.Browser.document;
+import static gwt.jelement.Browser.window;
 
 public abstract class AbstractDemo {
 
-    public final void execute(HTMLDivElement demoFrame) {
-        demoFrame.innerHTML = getTemplate().getText()+ HtmlClientBundle.INSTANCE.getGithubBanner().getText();
+    final void execute(HTMLDivElement demoFrame) {
+        demoFrame.setInnerHTML(getTemplate().getText()+ HtmlClientBundle.INSTANCE.getGithubBanner().getText());
         try {
             execute();
-        }catch(Exception e){
-            //TODO something clever here
+        }catch(JavaScriptException e){
+            window.getConsole().error(e.getThrown());
         }
 
-        double contentHeight = demoFrame.offsetHeight;
-                HTMLPreElement sourceContainer = (HTMLPreElement) document.createElement("pre");
-        sourceContainer.innerText = getSource().getText();
-        sourceContainer.style.setProperty("height", "calc(100vh - " + (contentHeight + 20) + "px)");
-        sourceContainer.style.setProperty("overflow", "auto");
-        sourceContainer.className="lang-Java";
+        double contentHeight = demoFrame.getOffsetHeight();
+                HTMLPreElement sourceContainer = document.createElement("pre");
+        sourceContainer.setInnerText(getSource().getText());
+        sourceContainer.getStyle().setProperty("height", "calc(100vh - " + (contentHeight + 20) + "px)");
+        sourceContainer.getStyle().setProperty("overflow", "auto");
+        sourceContainer.setClassName("lang-Java");
         demoFrame.appendChild(sourceContainer);
         HighlightJs.highlightBlock(sourceContainer);
     }
