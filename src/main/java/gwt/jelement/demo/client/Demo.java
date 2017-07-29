@@ -23,10 +23,11 @@ public class Demo implements EntryPoint {
     public void onModuleLoad() {
         HtmlClientBundle.INSTANCE.getStyle().ensureInjected();
         listing = document.getElementById("demo-listing");
-        demoFrame = (HTMLDivElement) document.getElementById("demo-div");
+        demoFrame = document.getElementById("demo-div");
 
         addDemo(new Canvas2DDemo());
         addDemo(new ElementAnimateDemo());
+        addDemo(new GeoLocationDemo());
         addDemo(new WebAudioDemo());
 
         window.addEventListener("hashchange", event -> {

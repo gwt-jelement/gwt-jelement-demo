@@ -16,4 +16,7 @@ public interface SourceClientBundle extends ClientBundle {
 
     @Source("ElementAnimateDemo.java")
     TextResource getElementAnimateDemoSource();
+
+    @Source(("GeoLocationDemo.java"))
+    TextResource getGeolocationSource();
 }

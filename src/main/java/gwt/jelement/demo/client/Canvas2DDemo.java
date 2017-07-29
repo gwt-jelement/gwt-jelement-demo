@@ -2,15 +2,19 @@ package gwt.jelement.demo.client;
 
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.canvas2d.CanvasRenderingContext2D;
+import gwt.jelement.core.CallbackFunction;
+import gwt.jelement.core.Function;
+import gwt.jelement.core.JsObject;
+import gwt.jelement.core.JsUtils;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.dom.FrameRequestCallback;
 import gwt.jelement.html.HTMLCanvasElement;
-import gwt.jelement.jelement.Function;
+import jsinterop.annotations.*;
+import jsinterop.base.Js;
 
 import java.util.Date;
 
-import static gwt.jelement.Browser.document;
-import static gwt.jelement.Browser.window;
+import static gwt.jelement.Browser.*;
 
 public class Canvas2DDemo extends AbstractDemo {
 
@@ -26,27 +30,27 @@ public class Canvas2DDemo extends AbstractDemo {
 
         context.beginPath();
         context.setFillStyle("yellow");
-        context.ellipse(50, 50, 25, 25, 0, 0, (float) (Math.PI * 2));
+        context.ellipse(50, 50, 25, 25, 0, 0, (float) (JsMath.PI * 2));
         context.fill();
     }
 
     private void clockDemo() {
         HTMLCanvasElement clockCanvas = document.getElementById("clock-canvas");
         CanvasRenderingContext2D context = clockCanvas.getContext("2d");
-        window.setInterval(new Function() {
+        window.setInterval(new CallbackFunction() {
             @Override
-            public Object callback(Object... objects) {
+            public Object onInvoked(Object... objects) {
                 Date time = new Date();
                 double hours = (double) (time.getHours() % 12) + time.getMinutes() / 60d;
                 double minutes = time.getMinutes() + time.getSeconds() / 60d;
                 double seconds = time.getSeconds() + (time.getTime() % 1000) / 1000d;
-                double offset = -Math.PI / 2;
-                float hoursX = (float) (75 * Math.cos(Math.PI * 2 * hours / 12 + offset) + 100);
-                float hoursY = (float) (75 * Math.sin(Math.PI * 2 * hours / 12 + offset) + 100);
-                float minX = (float) (80 * Math.cos(Math.PI * 2 * minutes / 60 + offset) + 100);
-                float minY = (float) (80 * Math.sin(Math.PI * 2 * minutes / 60 + offset) + 100);
-                float secX = (float) (80 * Math.cos(Math.PI * 2 * seconds / 60 + offset) + 100);
-                float secY = (float) (80 * Math.sin(Math.PI * 2 * seconds / 60 + offset) + 100);
+                double offset = -JsMath.PI / 2;
+                float hoursX = (float) (75 * Math.cos(JsMath.PI * 2 * hours / 12 + offset) + 100);
+                float hoursY = (float) (75 * Math.sin(JsMath.PI * 2 * hours / 12 + offset) + 100);
+                float minX = (float) (80 * Math.cos(JsMath.PI * 2 * minutes / 60 + offset) + 100);
+                float minY = (float) (80 * Math.sin(JsMath.PI * 2 * minutes / 60 + offset) + 100);
+                float secX = (float) (80 * Math.cos(JsMath.PI * 2 * seconds / 60 + offset) + 100);
+                float secY = (float) (80 * Math.sin(JsMath.PI * 2 * seconds / 60 + offset) + 100);
                 window.requestAnimationFrame(new FrameRequestCallback() {
                     @Override
                     public void handleEvent(double v) {

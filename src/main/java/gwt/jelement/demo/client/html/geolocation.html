@@ -1,0 +1,20 @@
+<div id="geolocation-demo">
+
+    <div id="map" style="width:250px;height: 250px;margin:20px;display: inline-block"></div>
+    <div style="display: inline-block; width: calc(100% - 500px); vertical-align: top">
+        <h3>Geolocation demo</h3>
+        <p>If everything went well, you should be seeing your location on the map to the left, obtained
+            with your consent through the Geolocation API.</p>
+        <p>The code to display the map was taken fron the Google Maps JavaScript API guide
+            <a href="https://developers.google.com/maps/documentation/javascript/adding-a-google-map"
+               target="_blank">Adding a Google Map with a Marker to Your Website</a>. Of note in the code
+        below is the implementation of the callback, whose name is specified in the URL used to load the script.
+            This is the case as well as many other Google APIs, and requires that a function with the same name
+            as the callback specified in the URL be registered in the global <code>window</code> object.</p>
+        <p>The <code>Mao</code>and <code>Marker</code> classes are created through jsinterop, see the
+            <a href="https://github.com/gwt-jelement/gwt-jelement-demo" target="_blank">GitHub project</a> for details.
+            Also note that use of <code>JsObject</code> as property maps is for demonstration purposes only,
+            a production app would have POJOs exported via jsnterop to define the various property maps.
+        </p>
+    </div>
+</div>

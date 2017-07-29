@@ -21,6 +21,9 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("element-animate.html")
     TextResource getElementAnimateHtml();
 
+    @Source("geolocation.html")
+    TextResource getGeoLocationHtml();
+
     @CssResource.NotStrict
     @Source("default.css")
     CssResource getStyle();
