@@ -1,19 +1,28 @@
-<h3>Canvas Demo</h3>
+<canvas width="300" height="300" id="sun-canvas"></canvas>
 
-<p>This is a demo of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank">
-    Canvas API<a>.</p>
+<div style="width:calc(100% - 500px);display: inline-block;vertical-align: top">
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4"><canvas width="200" height="200" id="my-canvas"></canvas></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-4"><canvas width="200" height="200" id="clock-canvas"></canvas></div>
-        <div class="col-md-2"></div>
-    </div>
+    <h3>Canvas Demo</h3>
+
+    <p>This is a demo of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank">
+        Canvas API<a>.</p>
 </div>
+
+<canvas width="200" height="200" id="clock-canvas"></canvas>
+
 <style>
-#clock-canvas{
-    background-image: url("clock.png");
-    background-repeat: no-repeat;
-}
+    #sun-canvas {
+        zoom: 0.7;
+        display: inline-block;
+        margin: 10px 20px 0 0;
+    }
+
+    #clock-canvas {
+        background-image: url("clock.png");
+        background-repeat: no-repeat;
+        zoom: 0.6;
+        display: inline-block;
+        margin: 40px 10px 0 20px;
+        vertical-align: top;
+    }
 </style>

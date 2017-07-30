@@ -13,6 +13,9 @@ public class WebAudioDemo extends AbstractDemo {
     private OscillatorNode osc;
     private GainNode gain;
     private OscillatorNode osc2;
+    private boolean playing;
+    private BootstrapButton btnSoundOn;
+    private BootstrapButton btnSoundOff;
 
     @Override
     protected void execute() {
@@ -21,10 +24,10 @@ public class WebAudioDemo extends AbstractDemo {
             Brian Rinaldi
             https://modernweb.com/audio-synthesis-in-javascript/
         */
-        BootstrapButton btnSoundOn = new BootstrapButton("Play", BootstrapButton.ButtonStyle.SUCCESS, "play");
+        btnSoundOn = new BootstrapButton("Play", BootstrapButton.ButtonStyle.SUCCESS, "play");
         btnSoundOn.appendTo(document.getElementById("audio-on"));
 
-        BootstrapButton btnSoundOff = new BootstrapButton("Stop", BootstrapButton.ButtonStyle.DANGER, "stop");
+        btnSoundOff = new BootstrapButton("Stop", BootstrapButton.ButtonStyle.DANGER, "stop");
         btnSoundOff.setDisabled(true);
         btnSoundOff.appendTo(document.getElementById("audio-off"));
 
@@ -48,19 +51,33 @@ public class WebAudioDemo extends AbstractDemo {
 
             btnSoundOn.setDisabled(true);
             btnSoundOff.setDisabled(false);
+            playing = true;
         });
         btnSoundOff.addClickListener(event -> {
-            osc.stop(audioContext.getCurrentTime()+ 1);
-            osc2.stop();
-            osc.disconnect();
-            osc2.disconnect();
-            gain.disconnect();
-            if (audioContext.getState() != AudioContextState.CLOSED) {
-                audioContext.close();
-            }
-            btnSoundOff.setDisabled(true);
-            btnSoundOn.setDisabled(false);
+            stopPlaying();
         });
+    }
+
+    private void stopPlaying() {
+        osc.stop(audioContext.getCurrentTime() + 1);
+        osc2.stop();
+        osc.disconnect();
+        osc2.disconnect();
+        gain.disconnect();
+        if (audioContext.getState() != AudioContextState.CLOSED) {
+            audioContext.close();
+        }
+        btnSoundOff.setDisabled(true);
+        btnSoundOn.setDisabled(false);
+        playing = false;
+    }
+
+    @Override
+    protected void setIntactive() {
+        if (playing) {
+            stopPlaying();
+        }
+        super.setIntactive();
     }
 
     @Override

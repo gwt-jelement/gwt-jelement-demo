@@ -8,6 +8,7 @@
   <entry-point class="gwt.jelement.demo.client.Demo" />
 
   <source path="client" />
+  <resource path="client/html" />
   <resource path="client" />
 
 </module>
