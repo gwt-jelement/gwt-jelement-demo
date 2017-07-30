@@ -33,7 +33,7 @@ public class WebAudioDemo extends AbstractDemo {
             osc = audioContext.createOscillator();
             osc.setType(OscillatorType.SINE);
             osc.connect(audioContext.getDestination(), 0);
-            osc.getFrequency().setValue(650);
+            osc.getFrequency().setValue(450);
 
             gain = audioContext.createGain();
             gain.getGain().setValue(100);

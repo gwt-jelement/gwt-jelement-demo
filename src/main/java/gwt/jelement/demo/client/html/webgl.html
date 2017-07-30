@@ -1,0 +1,105 @@
+<!-- These are WebGL shader scripts, jot JavaScript -->
+<script id="per-fragment-lighting-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec2 vTextureCoord;
+    varying vec3 vTransformedNormal;
+    varying vec4 vPosition;
+
+    uniform float uMaterialShininess;
+
+    uniform bool uShowSpecularHighlights;
+    uniform bool uUseLighting;
+    uniform bool uUseTextures;
+
+    uniform vec3 uAmbientColor;
+
+    uniform vec3 uPointLightingLocation;
+    uniform vec3 uPointLightingSpecularColor;
+    uniform vec3 uPointLightingDiffuseColor;
+
+    uniform sampler2D uSampler;
+
+    void main(void) {
+        vec3 lightWeighting;
+        if (!uUseLighting) {
+            lightWeighting = vec3(1.0, 1.0, 1.0);
+        } else {
+            vec3 lightDirection = normalize(uPointLightingLocation - vPosition.xyz);
+            vec3 normal = normalize(vTransformedNormal);
+
+            float specularLightWeighting = 0.0;
+            if (uShowSpecularHighlights) {
+                vec3 eyeDirection = normalize(-vPosition.xyz);
+                vec3 reflectionDirection = reflect(-lightDirection, normal);
+
+                specularLightWeighting = pow(max(dot(reflectionDirection, eyeDirection), 0.0), uMaterialShininess);
+            }
+
+            float diffuseLightWeighting = max(dot(normal, lightDirection), 0.0);
+            lightWeighting = uAmbientColor
+                + uPointLightingSpecularColor * specularLightWeighting
+                + uPointLightingDiffuseColor * diffuseLightWeighting;
+        }
+
+        vec4 fragmentColor;
+        if (uUseTextures) {
+            fragmentColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        } else {
+            fragmentColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+        gl_FragColor = vec4(fragmentColor.rgb * lightWeighting, fragmentColor.a);
+    }
+
+
+
+
+
+
+</script>
+
+<script id="per-fragment-lighting-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec3 aVertexNormal;
+    attribute vec2 aTextureCoord;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+    uniform mat3 uNMatrix;
+
+    varying vec2 vTextureCoord;
+    varying vec3 vTransformedNormal;
+    varying vec4 vPosition;
+
+    void main(void) {
+        vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);
+        gl_Position = uPMatrix * vPosition;
+        vTextureCoord = aTextureCoord;
+        vTransformedNormal = uNMatrix * aVertexNormal;
+    }
+
+</script>
+
+<div>
+    <canvas id="webgl-canvas" style="border: none;display: inline-block;margin:10px 20px 10px 0" width="250"
+            height="250">
+    </canvas>
+
+    <div style="display: inline-block;width: calc(100% - 500px);vertical-align: top">
+        <h3>WebGL Demo</h3>
+        <p>
+            This is a port of the JavaScript code in <a href="http://learningwebgl.com/blog/?p=1658" target="_blank">WebGL
+            Lesson 14 – specular highlights and loading a JSON model</a>, by Giles Thomas. slightly refactored, mostly
+            to
+            remove the use of expando attributes.
+        </p>
+        <p>
+            As with the original code, this code is licensed under a <a
+                href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">
+            Creative Commons Attribution/Share-Alike license</a>.
+        </p>
+        <p>
+            Acknowledgments: The galvanised pattern is a Creative Commons sample from <a
+                href="https://www.arroway-textures.ch/" target="_blank">Arroway Textures</a> .</p>
+    </div>
+</div>

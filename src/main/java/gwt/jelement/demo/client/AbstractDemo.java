@@ -12,22 +12,26 @@ import static gwt.jelement.Browser.window;
 
 public abstract class AbstractDemo {
 
+    private boolean active;
+
     final void execute(HTMLDivElement demoFrame) {
-        demoFrame.setInnerHTML(getTemplate().getText()+ HtmlClientBundle.INSTANCE.getGithubBanner().getText());
+        demoFrame.setInnerHTML(getTemplate().getText() + HtmlClientBundle.INSTANCE.getGithubBanner().getText());
+        active = true;
         try {
             execute();
-        }catch(JavaScriptException e){
+        } catch (JavaScriptException e) {
             window.getConsole().error(e.getThrown());
         }
 
         double contentHeight = demoFrame.getOffsetHeight();
-                HTMLPreElement sourceContainer = document.createElement("pre");
+        HTMLPreElement sourceContainer = document.createElement("pre");
         sourceContainer.setInnerText(getSource().getText());
         sourceContainer.getStyle().setProperty("height", "calc(100vh - " + (contentHeight + 20) + "px)");
         sourceContainer.getStyle().setProperty("overflow", "auto");
         sourceContainer.setClassName("lang-Java");
         demoFrame.appendChild(sourceContainer);
         HighlightJs.highlightBlock(sourceContainer);
+
     }
 
     protected abstract String getName();
@@ -40,5 +44,12 @@ public abstract class AbstractDemo {
 
     protected abstract void execute();
 
+    protected boolean isActiveDemo() {
+        return active;
+    }
+
+    protected void setIntactive() {
+        active = false;
+    }
 
 }

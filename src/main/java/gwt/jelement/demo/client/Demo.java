@@ -9,15 +9,14 @@ import gwt.jelement.html.HTMLDivElement;
 import java.util.HashMap;
 import java.util.Map;
 
-import static gwt.jelement.Browser.document;
-import static gwt.jelement.Browser.window;
-import static gwt.jelement.Browser.location;
+import static gwt.jelement.Browser.*;
 
 public class Demo implements EntryPoint {
 
-    Map<String, AbstractDemo> demoMap=new HashMap<>();
+    Map<String, AbstractDemo> demoMap = new HashMap<>();
     private Element listing;
     private HTMLDivElement demoFrame;
+    private AbstractDemo demo;
 
     @Override
     public void onModuleLoad() {
@@ -29,6 +28,7 @@ public class Demo implements EntryPoint {
         addDemo(new ElementAnimateDemo());
         addDemo(new GeoLocationDemo());
         addDemo(new WebAudioDemo());
+        addDemo(new WebGlDemo());
 
         window.addEventListener("hashchange", event -> {
             hashChanged(location.getHash());
@@ -37,14 +37,17 @@ public class Demo implements EntryPoint {
     }
 
     private void hashChanged(String hash) {
-        AbstractDemo demo = demoMap.get(location.getHash());
-        if (demo!=null){
+        if (demo != null) {
+            demo.setIntactive();
+        }
+        demo = demoMap.get(location.getHash());
+        if (demo != null) {
             demo.execute(demoFrame);
         }
     }
 
     private void addDemo(AbstractDemo demo) {
-        HTMLAnchorElement anchor= (HTMLAnchorElement) document.createElement("a");
+        HTMLAnchorElement anchor = (HTMLAnchorElement) document.createElement("a");
         String hash = "#" + demo.getName();
         anchor.setAttribute("href", hash);
         anchor.setInnerText(demo.getTitle());

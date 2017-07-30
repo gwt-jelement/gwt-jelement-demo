@@ -19,8 +19,8 @@ public class ElementAnimateDemo extends AbstractDemo {
         HTMLDivElement mainDiv = document.querySelector("div.clouds");
 
         Array<JsObject<String>> cloudTransitions = new Array<>(
-                JsObject.of("backgroundPosition", "0 302px"),
-                JsObject.of("backgroundPosition", "0 0")
+                new JsObject().with("backgroundPosition", "0 302px"),
+                new JsObject().with("backgroundPosition", "0 0")
         );
         KeyframeAnimationOptions cloudAnimationOptions = new KeyframeAnimationOptions();
         cloudAnimationOptions.setDuration(10_000);
@@ -34,8 +34,8 @@ public class ElementAnimateDemo extends AbstractDemo {
         mainDiv.appendChild(logo);
 
         Array<JsObject<String>> logoTransitions = new Array<>(
-                JsObject.of("transform", "translateY(0px)"),
-                JsObject.of("transform", "translateY(45px)")
+                new JsObject().with("transform", "translateY(0px)"),
+                new JsObject().with("transform", "translateY(45px)")
         );
         KeyframeAnimationOptions logoAnimationOptions = new KeyframeAnimationOptions();
         logoAnimationOptions.setDuration(4_000);
@@ -54,8 +54,8 @@ public class ElementAnimateDemo extends AbstractDemo {
         mainDiv.appendChild(tickerDiv);
 
         Array<JsObject<String>> tickerTransitions = new Array<>(
-                JsObject.of("marginLeft", "100%"),
-                JsObject.of("marginLeft", "-1200px")
+                new JsObject().with("marginLeft", "100%"),
+                new JsObject().with("marginLeft", "-1200px")
         );
         KeyframeAnimationOptions tickerAnimationOptions = new KeyframeAnimationOptions();
         tickerAnimationOptions.setDuration(20_000);

@@ -3,14 +3,8 @@ package gwt.jelement.demo.client;
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.canvas2d.CanvasRenderingContext2D;
 import gwt.jelement.core.CallbackFunction;
-import gwt.jelement.core.Function;
-import gwt.jelement.core.JsObject;
-import gwt.jelement.core.JsUtils;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
-import gwt.jelement.dom.FrameRequestCallback;
 import gwt.jelement.html.HTMLCanvasElement;
-import jsinterop.annotations.*;
-import jsinterop.base.Js;
 
 import java.util.Date;
 
@@ -18,12 +12,14 @@ import static gwt.jelement.Browser.*;
 
 public class Canvas2DDemo extends AbstractDemo {
 
+    private double timer;
+
     @Override
     protected void execute() {
         clockDemo();
 
         HTMLCanvasElement canvas = document.getElementById("my-canvas");
-        CanvasRenderingContext2D context = canvas.getContext("2d");
+        CanvasRenderingContext2D context = canvas.getContext("2d").asCanvasRenderingContext2D();
 
         context.setFillStyle("green");
         context.fillRect(10, 10, 150, 150);
@@ -36,8 +32,8 @@ public class Canvas2DDemo extends AbstractDemo {
 
     private void clockDemo() {
         HTMLCanvasElement clockCanvas = document.getElementById("clock-canvas");
-        CanvasRenderingContext2D context = clockCanvas.getContext("2d");
-        window.setInterval(new CallbackFunction() {
+        CanvasRenderingContext2D context = clockCanvas.getContext("2d").asCanvasRenderingContext2D();
+        timer=window.setInterval(new CallbackFunction() {
             @Override
             public Object onInvoked(Object... objects) {
                 Date time = new Date();
@@ -51,33 +47,34 @@ public class Canvas2DDemo extends AbstractDemo {
                 float minY = (float) (80 * Math.sin(JsMath.PI * 2 * minutes / 60 + offset) + 100);
                 float secX = (float) (80 * Math.cos(JsMath.PI * 2 * seconds / 60 + offset) + 100);
                 float secY = (float) (80 * Math.sin(JsMath.PI * 2 * seconds / 60 + offset) + 100);
-                window.requestAnimationFrame(new FrameRequestCallback() {
-                    @Override
-                    public void handleEvent(double v) {
-                        context.clearRect(0, 0, 200, 200);
-                        context.beginPath();
-                        context.setStrokeStyle("black");
-                        context.setLineWidth(4);
-                        context.moveTo(100, 100);
-                        context.lineTo(hoursX, hoursY);
-                        context.stroke();
-                        context.beginPath();
-                        context.setStrokeStyle("gray");
-                        context.setLineWidth(3);
-                        context.moveTo(100, 100);
-                        context.lineTo(minX, minY);
-                        context.stroke();
-                        context.beginPath();
-                        context.setLineWidth(1);
-                        context.setStrokeStyle("red");
-                        context.moveTo(100, 100);
-                        context.lineTo(secX, secY);
-                        context.stroke();
-                    }
-                });
+                context.clearRect(0, 0, 200, 200);
+                context.beginPath();
+                context.setStrokeStyle("black");
+                context.setLineWidth(4);
+                context.moveTo(100, 100);
+                context.lineTo(hoursX, hoursY);
+                context.stroke();
+                context.beginPath();
+                context.setStrokeStyle("gray");
+                context.setLineWidth(3);
+                context.moveTo(100, 100);
+                context.lineTo(minX, minY);
+                context.stroke();
+                context.beginPath();
+                context.setLineWidth(1);
+                context.setStrokeStyle("red");
+                context.moveTo(100, 100);
+                context.lineTo(secX, secY);
+                context.stroke();
                 return null;
             }
         }, 100);
+    }
+
+    @Override
+    protected void setIntactive() {
+        window.clearInterval(timer);
+        super.setIntactive();
     }
 
     @Override

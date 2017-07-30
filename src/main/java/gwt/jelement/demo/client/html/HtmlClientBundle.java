@@ -7,7 +7,7 @@ import com.google.gwt.resources.client.TextResource;
 
 public interface HtmlClientBundle extends ClientBundle {
 
-    HtmlClientBundle INSTANCE= GWT.create(HtmlClientBundle.class);
+    HtmlClientBundle INSTANCE = GWT.create(HtmlClientBundle.class);
 
     @Source("webaudio.html")
     TextResource getWebAudioHtml();
@@ -23,6 +23,12 @@ public interface HtmlClientBundle extends ClientBundle {
 
     @Source("geolocation.html")
     TextResource getGeoLocationHtml();
+
+    @Source("webgl.html")
+    TextResource getWebGlHtml();
+
+    @Source("glmatrix.0.9.5.min.js")
+    TextResource getGlMatrixJs();
 
     @CssResource.NotStrict
     @Source("default.css")
