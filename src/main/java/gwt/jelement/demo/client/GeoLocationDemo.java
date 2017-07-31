@@ -46,7 +46,8 @@ public class GeoLocationDemo extends AbstractDemo {
             @Override
             public Object onInvoked(Object... objects) {
                 scriptLoaded = true;
-                if (coordinates != undefined) {
+                window.delete(MAP_INIT_CALLBACK);
+                if (coordinates != null) {
                     ready();
                 }
                 return undefined;

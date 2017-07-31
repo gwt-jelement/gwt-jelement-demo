@@ -1,0 +1,62 @@
+<style>
+    .battery {
+        width: 100px;
+        height: 30px;
+        border: 2px solid black;
+        margin: 20px auto 10px auto;
+    }
+
+    .battery-inner {
+        display: inline-block;
+        height: 100%;
+        border-right: 1px solid silver;
+    }
+
+    .battery-inner.high {
+        background-color: green;
+    }
+
+    .battery-inner.medium {
+        background-color: yellow;
+    }
+
+    .battery-inner.low {
+        background-color: red;
+    }
+
+    .status {
+        margin: 0 auto 10px auto;
+        text-align: center;
+        font-weight: bold;
+        font-size: 80%;
+    }
+    .error{
+        color: red;
+    }
+
+</style>
+
+<div style="width:200px;height:100px;display: inline-block">
+    <div class="battery">
+        <div class="battery-inner">
+        </div>
+    </div>
+    <div class="status">&nbsp;
+    </div>
+</div>
+<div style="width:calc(100% - 500px); display: inline-block;vertical-align: top; margin: 0 0 20px 0">
+<h3>Battery Status Demo</h3>
+    <p>Applications can use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API" target="_blank">
+    Battery Status API</a> to reduce power consumption when the device is running on battery, for example by disabling
+    animations or increasing polling time. Unfortunately, it is currently poorly supported, and this demo only runs on Chrome
+        and Opera browsers.</p>
+    <div>
+        <span class="label label-primary">Battery Status</span>
+        <span class="label label-primary">Feature Detection</span>
+        <span class="label label-primary">Promise</span>
+        <span class="label label-primary">querySelector</span>
+        <span class="label label-primary">classList</span>
+    </div>
+
+
+</div>

@@ -13,7 +13,7 @@ import static gwt.jelement.Browser.*;
 
 public class Demo implements EntryPoint {
 
-    Map<String, AbstractDemo> demoMap = new HashMap<>();
+    private Map<String, AbstractDemo> demoMap = new HashMap<>();
     private Element listing;
     private HTMLDivElement demoFrame;
     private AbstractDemo demo;
@@ -24,19 +24,18 @@ public class Demo implements EntryPoint {
         listing = document.getElementById("demo-listing");
         demoFrame = document.getElementById("demo-div");
 
+        addDemo(new BatteryDemo());
         addDemo(new Canvas2DDemo());
         addDemo(new ElementAnimateDemo());
         addDemo(new GeoLocationDemo());
         addDemo(new WebAudioDemo());
         addDemo(new WebGlDemo());
 
-        window.addEventListener("hashchange", event -> {
-            hashChanged(location.getHash());
-        });
-        hashChanged(location.getHash());
+        window.addEventListener("hashchange", event -> hashChanged());
+        hashChanged();
     }
 
-    private void hashChanged(String hash) {
+    private void hashChanged() {
         if (demo != null) {
             demo.setIntactive();
         }
@@ -47,7 +46,7 @@ public class Demo implements EntryPoint {
     }
 
     private void addDemo(AbstractDemo demo) {
-        HTMLAnchorElement anchor = (HTMLAnchorElement) document.createElement("a");
+        HTMLAnchorElement anchor = document.createElement("a");
         String hash = "#" + demo.getName();
         anchor.setAttribute("href", hash);
         anchor.setInnerText(demo.getTitle());

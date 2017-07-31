@@ -8,13 +8,12 @@ import gwt.jelement.core.Math;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.demo.client.jsinterop.Mat3;
 import gwt.jelement.demo.client.jsinterop.Mat4;
-import gwt.jelement.dom.*;
+import gwt.jelement.dom.Node;
 import gwt.jelement.html.HTMLCanvasElement;
 import gwt.jelement.html.HTMLScriptElement;
 import gwt.jelement.html.Image;
 import gwt.jelement.webgl.*;
 import gwt.jelement.xmlhttprequest.XMLHttpRequest;
-import javaemul.internal.annotations.UncheckedCast;
 
 import static gwt.jelement.Browser.*;
 
@@ -27,14 +26,14 @@ As with the original code, this code is licensed under a Creative Commons Attrib
  */
 
 public class WebGlDemo extends AbstractDemo {
+    private WebGLUniformLocation pMatrixUniform;
+
 
     static {
         /* inject a matrix manipulation library */
         ScriptInjector.fromString(HtmlClientBundle.INSTANCE.getGlMatrixJs().getText())
                 .setWindow(ScriptInjector.TOP_WINDOW).inject();
     }
-
-    Array mvMatrixStack = new Array(); /* FIXME implement Array */
     private WebGLRenderingContext gl;
     private double viewportWidth;
     private double viewportHeight;
@@ -43,14 +42,12 @@ public class WebGlDemo extends AbstractDemo {
     private WebGLBuffer teapotVertexPositionBuffer;
     private WebGLBuffer teapotVertexTextureCoordBuffer;
     private WebGLBuffer teapotVertexIndexBuffer;
-    private WebGLProgram shaderProgram;
     private Float32Array mvMatrix = Mat4.create();
     private Float32Array pMatrix = Mat4.create();
-    private float teapotAngle = 180f;
+    private double teapotAngle = 180;
     private double vertexPositionAttribute;
     private double vertexNormalAttribute;
     private double textureCoordAttribute;
-    private WebGLUniformLocation pMatrixUniform;
     private WebGLUniformLocation mvMatrixUniform;
     private WebGLUniformLocation nMatrixUniform;
     private WebGLUniformLocation samplerUniform;
@@ -78,11 +75,11 @@ public class WebGlDemo extends AbstractDemo {
 
         initShaders();
 
-        galvanizedTexture = createTexture("galvanized.jpg");
+        galvanizedTexture = createTexture();
 
         loadTeapot();
 
-        gl.clearColor((float) 0.0, (float) 0.0, (float) 0.0, (float) 1.0);
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(WebGLRenderingContext.DEPTH_TEST);
 
         tick();
@@ -92,7 +89,7 @@ public class WebGlDemo extends AbstractDemo {
         WebGLShader fragmentShader = getShader(gl, "per-fragment-lighting-fs");
         WebGLShader vertexShader = getShader(gl, "per-fragment-lighting-vs");
 
-        shaderProgram = gl.createProgram();
+        WebGLProgram shaderProgram = gl.createProgram();
         gl.attachShader(shaderProgram, vertexShader);
         gl.attachShader(shaderProgram, fragmentShader);
         gl.linkProgram(shaderProgram);
@@ -128,11 +125,11 @@ public class WebGlDemo extends AbstractDemo {
 
     private WebGLShader getShader(WebGLRenderingContext gl, String id) {
         HTMLScriptElement shaderScript = document.getElementById(id);
-        String shaderSource = "";
+        StringBuilder shaderSource = new StringBuilder();
         Node node = shaderScript.getFirstChild();
         while (node != null) {
             if (node.getNodeType() == Node.TEXT_NODE) {
-                shaderSource += node.getTextContent();
+                shaderSource.append(node.getTextContent());
             }
             node = node.getNextSibling();
         }
@@ -140,13 +137,13 @@ public class WebGlDemo extends AbstractDemo {
         WebGLShader shader;
         if ("x-shader/x-fragment".equals(shaderScript.getType())) {
             shader = gl.createShader(WebGLRenderingContext.FRAGMENT_SHADER);
-        } else if (shaderScript.getType() == "x-shader/x-vertex") {
+        } else if ("x-shader/x-vertex".equals(shaderScript.getType())) {
             shader = gl.createShader(WebGLRenderingContext.VERTEX_SHADER);
         } else {
             return null;
         }
 
-        gl.shaderSource(shader, shaderSource);
+        gl.shaderSource(shader, shaderSource.toString());
         gl.compileShader(shader);
 
         if (!Js.isTrue(gl.getShaderParameter(shader, WebGLRenderingContext.COMPILE_STATUS))) {
@@ -157,14 +154,14 @@ public class WebGlDemo extends AbstractDemo {
         return shader;
     }
 
-    private WebGLTexture createTexture(String imageSource) {
+    private WebGLTexture createTexture() {
         WebGLTexture texture = gl.createTexture();
         final Image image = new Image();
         image.setOnLoad(event -> {
             handleLoadedTexture(gl, texture, image);
             return null;
         });
-        image.setSrc(imageSource);
+        image.setSrc("galvanized.jpg");
         return texture;
     }
 
@@ -196,7 +193,6 @@ public class WebGlDemo extends AbstractDemo {
     private void handleLoadedTeapot(WebGLRenderingContext gl, JsObject teapotData) {
         teapotVertexNormalBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexNormalBuffer);
-        console.log(teapotData.get("vertexNormals"));
         double[] vertexNormals = toDoubleArray((Array) teapotData.get("vertexNormals"));
         gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(vertexNormals),
                 WebGLRenderingContext.STATIC_DRAW);
@@ -228,7 +224,7 @@ public class WebGlDemo extends AbstractDemo {
         int size = (int) array.length;
         double[] result = new double[size];
         for (int index = 0; index < size; ++index) {
-            result[index] = ((Double) array.getAt(index)).doubleValue();
+            result[index] = (Double) array.getAt(index);
         }
         return result;
     }
@@ -242,9 +238,8 @@ public class WebGlDemo extends AbstractDemo {
         return result;
     }
 
-
     private void tick() {
-        if (isActiveDemo()) {
+        if (isDemoActive()) {
             window.requestAnimationFrame(v -> tick());
             drawScene();
             animate();
@@ -262,21 +257,21 @@ public class WebGlDemo extends AbstractDemo {
         Mat4.perspective(45, viewportWidth / viewportHeight, 0.1, 100.0, pMatrix);
         gl.uniform1i(showSpecularHighlightsUniform, 1);
         gl.uniform1i(useLightingUniform, 1);
-        gl.uniform3f(ambientColorUniform, 0.2f, 0.2f, 0.2f);
-        gl.uniform3f(pointLightingLocationUniform, -10f, 4, -20f);
-        gl.uniform3f(pointLightingSpecularColorUniform, .8f, .8f, .8f);
-        gl.uniform3f(pointLightingDiffuseColorUniform, .8f, .8f, .8f);
+        gl.uniform3f(ambientColorUniform, 0.2, 0.2, 0.2);
+        gl.uniform3f(pointLightingLocationUniform, -10, 4, -20);
+        gl.uniform3f(pointLightingSpecularColorUniform, .8, .8, .8);
+        gl.uniform3f(pointLightingDiffuseColorUniform, .8, .8, .8);
         gl.uniform1i(useTexturesUniform, 1);
 
         Mat4.identity(mvMatrix);
-        Mat4.translate(mvMatrix, new float[]{0, 0, -40});
-        Mat4.rotate(mvMatrix, degToRad(23.4f), new float[]{1, 0, -1});
-        Mat4.rotate(mvMatrix, degToRad(teapotAngle), new float[]{0, 1, 0});
+        Mat4.translate(mvMatrix, new double[]{0, 0, -40});
+        Mat4.rotate(mvMatrix, degToRad(23.4), new double[]{1, 0, -1});
+        Mat4.rotate(mvMatrix, degToRad(teapotAngle), new double[]{0, 1, 0});
 
         gl.activeTexture(WebGLRenderingContext.TEXTURE0);
         gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, galvanizedTexture);
         gl.uniform1i(samplerUniform, 0);
-        gl.uniform1f(materialShininessUniform, 32f);
+        gl.uniform1f(materialShininessUniform, 32);
 
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexPositionBuffer);
         gl.vertexAttribPointer(vertexPositionAttribute, teapotVertexPositionBufferItemSize,
@@ -306,8 +301,8 @@ public class WebGlDemo extends AbstractDemo {
         gl.uniformMatrix3fv(nMatrixUniform, false, normalMatrix);
     }
 
-    private float degToRad(float degrees) {
-        return (float) (degrees * Math.PI / 180f);
+    private double degToRad(double degrees) {
+        return degrees * Math.PI / 180;
     }
 
     private void animate() {

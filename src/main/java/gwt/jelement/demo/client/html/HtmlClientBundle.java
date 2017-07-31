@@ -27,6 +27,9 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("webgl.html")
     TextResource getWebGlHtml();
 
+    @Source("battery.html")
+    TextResource getBatteryHtml();
+
     @Source("glmatrix.0.9.5.min.js")
     TextResource getGlMatrixJs();
 

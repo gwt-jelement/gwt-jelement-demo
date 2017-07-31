@@ -22,4 +22,7 @@ public interface SourceClientBundle extends ClientBundle {
 
     @Source("WebGlDemo.java")
     TextResource getWebGlSource();
+
+    @Source("BatteryDemo.java")
+    TextResource getBatterySource();
 }

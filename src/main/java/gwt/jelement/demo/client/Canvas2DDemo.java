@@ -65,7 +65,7 @@ public class Canvas2DDemo extends AbstractDemo {
         ctx.stroke();
 
         ctx.drawImage(sun, 0, 0, 300, 300);
-        if (isActiveDemo()) {
+        if (isDemoActive()) {
             window.requestAnimationFrame(v -> drawPlanets(ctx, earth, moon, sun));
         }
     }

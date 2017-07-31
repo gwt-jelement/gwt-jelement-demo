@@ -4,6 +4,7 @@ package gwt.jelement.demo.client;
 import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
+import gwt.jelement.demo.client.jsinterop.HighlightJs;
 import gwt.jelement.html.HTMLDivElement;
 import gwt.jelement.html.HTMLPreElement;
 
@@ -44,12 +45,12 @@ public abstract class AbstractDemo {
 
     protected abstract void execute();
 
-    protected boolean isActiveDemo() {
-        return active;
-    }
-
     protected void setIntactive() {
         active = false;
+    }
+
+    boolean isDemoActive() {
+        return active;
     }
 
 }

@@ -34,16 +34,17 @@ public class WebAudioDemo extends AbstractDemo {
         btnSoundOn.addClickListener((Event event) -> {
             audioContext = new AudioContext();
             osc = audioContext.createOscillator();
-            osc.setType(OscillatorType.SINE);
+            osc.setType(OscillatorType.SQUARE);
             osc.connect(audioContext.getDestination(), 0);
-            osc.getFrequency().setValue(450);
+            osc.getFrequency().setValue(550);
 
             gain = audioContext.createGain();
             gain.getGain().setValue(100);
             gain.connect(osc.getFrequency());
 
             osc2 = audioContext.createOscillator();
-            osc2.getFrequency().setValue(1.1f);
+            osc2.getFrequency().setValue(1.25);
+            osc2.setType(OscillatorType.TRIANGLE);
             osc2.connect(gain);
 
             osc.start();
@@ -53,9 +54,7 @@ public class WebAudioDemo extends AbstractDemo {
             btnSoundOff.setDisabled(false);
             playing = true;
         });
-        btnSoundOff.addClickListener(event -> {
-            stopPlaying();
-        });
+        btnSoundOff.addClickListener(event -> stopPlaying());
     }
 
     private void stopPlaying() {

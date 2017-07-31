@@ -1,6 +1,5 @@
 package gwt.jelement.demo.client;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.TextResource;
 import elemental2.core.Array;
 import gwt.jelement.animation.KeyframeAnimationOptions;
@@ -19,8 +18,8 @@ public class ElementAnimateDemo extends AbstractDemo {
         HTMLDivElement mainDiv = document.querySelector("div.clouds");
 
         Array<JsObject<String>> cloudTransitions = new Array<>(
-                new JsObject().with("backgroundPosition", "0 302px"),
-                new JsObject().with("backgroundPosition", "0 0")
+                new JsObject<String>().with("backgroundPosition", "0 302px"),
+                new JsObject<String>().with("backgroundPosition", "0 0")
         );
         KeyframeAnimationOptions cloudAnimationOptions = new KeyframeAnimationOptions();
         cloudAnimationOptions.setDuration(10_000);
@@ -34,8 +33,8 @@ public class ElementAnimateDemo extends AbstractDemo {
         mainDiv.appendChild(logo);
 
         Array<JsObject<String>> logoTransitions = new Array<>(
-                new JsObject().with("transform", "translateY(0px)"),
-                new JsObject().with("transform", "translateY(45px)")
+                new JsObject<String>().with("transform", "translateY(0px)"),
+                new JsObject<String>().with("transform", "translateY(45px)")
         );
         KeyframeAnimationOptions logoAnimationOptions = new KeyframeAnimationOptions();
         logoAnimationOptions.setDuration(4_000);
@@ -54,8 +53,8 @@ public class ElementAnimateDemo extends AbstractDemo {
         mainDiv.appendChild(tickerDiv);
 
         Array<JsObject<String>> tickerTransitions = new Array<>(
-                new JsObject().with("marginLeft", "100%"),
-                new JsObject().with("marginLeft", "-1200px")
+                new JsObject<String>().with("marginLeft", "100%"),
+                new JsObject<String>().with("marginLeft", "-1200px")
         );
         KeyframeAnimationOptions tickerAnimationOptions = new KeyframeAnimationOptions();
         tickerAnimationOptions.setDuration(20_000);
@@ -70,7 +69,7 @@ public class ElementAnimateDemo extends AbstractDemo {
 
     @Override
     protected String getTitle() {
-        return "Element.animate() demo";
+        return "Element.animate() Demo";
     }
 
     @Override

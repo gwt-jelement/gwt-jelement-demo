@@ -13,7 +13,7 @@ public class Mat4 {
     public static native Float32Array create();
     public static native void perspective(int i, double v, double v1, double v2, Float32Array pMatrix);
     public static native void identity(Float32Array mvMatrix);
-    public static native void translate(Float32Array mvMatrix, float[] floats);
-    public static native void rotate(Float32Array mvMatrix, float v, float[] floats);
+    public static native void translate(Float32Array mvMatrix, double[] floats);
+    public static native void rotate(Float32Array mvMatrix, double v, double[] floats);
     public static native void toInverseMat3(Float32Array mvMatrix, Float32Array normalMatrix);
 }
