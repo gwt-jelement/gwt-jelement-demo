@@ -1,7 +1,6 @@
 package gwt.jelement.demo.client.jsinterop;
 
 import gwt.jelement.core.Float32Array;
-import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 

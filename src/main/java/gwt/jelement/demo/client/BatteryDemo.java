@@ -2,15 +2,14 @@ package gwt.jelement.demo.client;
 
 import com.google.gwt.resources.client.TextResource;
 import elemental2.promise.IThenable;
-import gwt.jelement.Browser;
 import gwt.jelement.battery.BatteryManager;
 import gwt.jelement.core.Math;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
-import gwt.jelement.dom.Element;
 import gwt.jelement.events.EventHandlerNonNull;
 import gwt.jelement.html.HTMLDivElement;
 
-import static gwt.jelement.Browser.*;
+import static gwt.jelement.Browser.document;
+import static gwt.jelement.Browser.navigator;
 
 public class BatteryDemo extends AbstractDemo {
 
@@ -18,9 +17,9 @@ public class BatteryDemo extends AbstractDemo {
 
     @Override
     protected void execute() {
-        if(navigator.has("getBattery")){
+        if (navigator.object().has("getBattery")) {
             navigator.getBattery().then(this::setup);
-        }else{
+        } else {
             HTMLDivElement statusDiv = document.querySelector("div.status");
             statusDiv.setInnerHTML("Not supported in this browser");
             statusDiv.getClassList().add("error");
@@ -28,7 +27,7 @@ public class BatteryDemo extends AbstractDemo {
     }
 
     private <V> IThenable<V> setup(BatteryManager batteryManager) {
-        this.batteryManager=batteryManager;
+        this.batteryManager = batteryManager;
         EventHandlerNonNull updateEventHandler = event -> {
             updateStatus(batteryManager);
             return null;
@@ -60,10 +59,10 @@ public class BatteryDemo extends AbstractDemo {
     }
 
     private String toTimString(double time) {
-        if (Double.isInfinite(time)){
+        if (Double.isInfinite(time)) {
             return "time left: not available";
         }
-        if (time==0){
+        if (time == 0) {
             return "&nbsp;";
         }
         String result = "";
@@ -75,16 +74,16 @@ public class BatteryDemo extends AbstractDemo {
         if (minutes != 0) {
             result += minutes + " min";
         }
-        return "time left: "+result;
+        return "time left: " + result;
     }
 
     @Override
-    protected void setIntactive() {
+    protected void setInactive() {
         batteryManager.setOnDischargingtimechange(null);
         batteryManager.setOnLevelchange(null);
         batteryManager.setOnChargingtimechange(null);
         batteryManager.setOnChargingchange(null);
-        super.setIntactive();
+        super.setInactive();
     }
 
     @Override

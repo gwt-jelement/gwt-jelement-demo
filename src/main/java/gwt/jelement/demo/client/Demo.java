@@ -13,7 +13,7 @@ import static gwt.jelement.Browser.*;
 
 public class Demo implements EntryPoint {
 
-    private Map<String, AbstractDemo> demoMap = new HashMap<>();
+    private final Map<String, AbstractDemo> demoMap = new HashMap<>();
     private Element listing;
     private HTMLDivElement demoFrame;
     private AbstractDemo demo;
@@ -37,7 +37,7 @@ public class Demo implements EntryPoint {
 
     private void hashChanged() {
         if (demo != null) {
-            demo.setIntactive();
+            demo.setInactive();
         }
         demo = demoMap.get(location.getHash());
         if (demo != null) {

@@ -16,7 +16,7 @@ public interface HtmlClientBundle extends ClientBundle {
     TextResource getCanvas2DHtml();
 
     @Source("github-banner.html")
-    TextResource getGithubBanner();
+    TextResource getGitHubBanner();
 
     @Source("element-animate.html")
     TextResource getElementAnimateHtml();

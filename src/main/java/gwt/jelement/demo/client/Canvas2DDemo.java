@@ -109,9 +109,9 @@ public class Canvas2DDemo extends AbstractDemo {
     }
 
     @Override
-    protected void setIntactive() {
+    protected void setInactive() {
         window.clearInterval(timer);
-        super.setIntactive();
+        super.setInactive();
     }
 
     @Override

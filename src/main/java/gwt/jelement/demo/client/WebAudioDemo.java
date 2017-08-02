@@ -72,11 +72,11 @@ public class WebAudioDemo extends AbstractDemo {
     }
 
     @Override
-    protected void setIntactive() {
+    protected void setInactive() {
         if (playing) {
             stopPlaying();
         }
-        super.setIntactive();
+        super.setInactive();
     }
 
     @Override

@@ -11,12 +11,12 @@ import gwt.jelement.html.HTMLPreElement;
 import static gwt.jelement.Browser.document;
 import static gwt.jelement.Browser.window;
 
-public abstract class AbstractDemo {
+abstract class AbstractDemo {
 
     private boolean active;
 
     final void execute(HTMLDivElement demoFrame) {
-        demoFrame.setInnerHTML(getTemplate().getText() + HtmlClientBundle.INSTANCE.getGithubBanner().getText());
+        demoFrame.setInnerHTML(getTemplate().getText() + HtmlClientBundle.INSTANCE.getGitHubBanner().getText());
         active = true;
         try {
             execute();
@@ -45,7 +45,7 @@ public abstract class AbstractDemo {
 
     protected abstract void execute();
 
-    protected void setIntactive() {
+    void setInactive() {
         active = false;
     }
 

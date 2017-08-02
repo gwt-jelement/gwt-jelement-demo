@@ -2,7 +2,6 @@ package gwt.jelement.demo.client;
 
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.resources.client.TextResource;
-import elemental2.core.Array;
 import gwt.jelement.core.*;
 import gwt.jelement.core.Math;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
@@ -42,8 +41,8 @@ public class WebGlDemo extends AbstractDemo {
     private WebGLBuffer teapotVertexPositionBuffer;
     private WebGLBuffer teapotVertexTextureCoordBuffer;
     private WebGLBuffer teapotVertexIndexBuffer;
-    private Float32Array mvMatrix = Mat4.create();
-    private Float32Array pMatrix = Mat4.create();
+    private final Float32Array mvMatrix = Mat4.create();
+    private final Float32Array pMatrix = Mat4.create();
     private double teapotAngle = 180;
     private double vertexPositionAttribute;
     private double vertexNormalAttribute;
@@ -62,7 +61,7 @@ public class WebGlDemo extends AbstractDemo {
     private int teapotVertexNormalBufferItemSize;
     private int teapotVertexTextureCoordBufferItemSize;
     private int teapotVertexPositionBufferItemSize;
-    private int teapotVertexIndexBufferNumItems;
+    private double teapotVertexIndexBufferNumItems;
     private double lastTime = 0;
 
     @Override
@@ -158,14 +157,14 @@ public class WebGlDemo extends AbstractDemo {
         WebGLTexture texture = gl.createTexture();
         final Image image = new Image();
         image.setOnLoad(event -> {
-            handleLoadedTexture(gl, texture, image);
+            handleLoadedTexture(texture, image);
             return null;
         });
         image.setSrc("galvanized.jpg");
         return texture;
     }
 
-    private void handleLoadedTexture(WebGLRenderingContext gl, WebGLTexture texture, Image image) {
+    private void handleLoadedTexture(WebGLTexture texture, Image image) {
         gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, 1);
         gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, texture);
         gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA,
@@ -193,49 +192,28 @@ public class WebGlDemo extends AbstractDemo {
     private void handleLoadedTeapot(WebGLRenderingContext gl, JsObject teapotData) {
         teapotVertexNormalBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexNormalBuffer);
-        double[] vertexNormals = toDoubleArray((Array) teapotData.get("vertexNormals"));
-        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(vertexNormals),
+        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array((Array) teapotData.get("vertexNormals")),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexNormalBufferItemSize = 3;
 
         teapotVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexTextureCoordBuffer);
-        double[] vertexTextureCoords = toDoubleArray((Array) teapotData.get("vertexTextureCoords"));
-        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(vertexTextureCoords),
+        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array((Array) teapotData.get("vertexTextureCoords")),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexTextureCoordBufferItemSize = 2;
 
         teapotVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexPositionBuffer);
-        double[] vertexPositions = toDoubleArray((Array) teapotData.get("vertexPositions"));
-        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(vertexPositions),
+        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array((Array) teapotData.get("vertexPositions")),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexPositionBufferItemSize = 3;
 
         teapotVertexIndexBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, teapotVertexIndexBuffer);
-        short[] indices = toShortArray((Array) teapotData.get("indices"));
+        Array indices = (Array) teapotData.get("indices");
         gl.bufferData(WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices),
                 WebGLRenderingContext.STATIC_DRAW);
-        teapotVertexIndexBufferNumItems = indices.length;
-    }
-
-    private double[] toDoubleArray(Array array) {
-        int size = (int) array.length;
-        double[] result = new double[size];
-        for (int index = 0; index < size; ++index) {
-            result[index] = (Double) array.getAt(index);
-        }
-        return result;
-    }
-
-    private short[] toShortArray(Array array) {
-        int size = (int) array.length;
-        short[] result = new short[size];
-        for (int index = 0; index < size; ++index) {
-            result[index] = ((Double) array.getAt(index)).shortValue();
-        }
-        return result;
+        teapotVertexIndexBufferNumItems = indices.getLength();
     }
 
     private void tick() {

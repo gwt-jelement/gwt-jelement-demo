@@ -24,34 +24,26 @@ public class GeoLocationDemo extends AbstractDemo {
 
     @Override
     protected void execute() {
-        if (!navigator.has("geolocation")) {
+        if (!navigator.object().has("geolocation")) {
             window.alert("Your browser does not support geolocation");
             return;
         }
 
-        HTMLDivElement demoContainer = document.getElementById("geolocation-demo");
-
         Geolocation geolocation = navigator.getGeolocation();
-        geolocation.getCurrentPosition(new PositionCallback() {
-            @Override
-            public void handleEvent(Position position) {
-                GeoLocationDemo.this.coordinates = position.getCoords();
-                if (scriptLoaded) {
-                    ready();
-                }
+        geolocation.getCurrentPosition(position -> {
+            GeoLocationDemo.this.coordinates = position.getCoords();
+            if (scriptLoaded) {
+                ready();
             }
         });
 
-        window.set(MAP_INIT_CALLBACK, new CallbackFunction() {
-            @Override
-            public Object onInvoked(Object... objects) {
-                scriptLoaded = true;
-                window.delete(MAP_INIT_CALLBACK);
-                if (coordinates != null) {
-                    ready();
-                }
-                return undefined;
+        window.object().set(MAP_INIT_CALLBACK, (CallbackFunction) objects -> {
+            scriptLoaded = true;
+            window.object().delete(MAP_INIT_CALLBACK);
+            if (coordinates != null) {
+                ready();
             }
+            return undefined;
         });
 
         if (!scriptLoaded) {
@@ -62,8 +54,9 @@ public class GeoLocationDemo extends AbstractDemo {
     }
 
     private void ready() {
+        //FIXME
         HTMLDivElement mapContainer =
-                (HTMLDivElement) document.querySelectorAll("div#geolocation-demo div#map").get(0);
+                (HTMLDivElement) document.querySelectorAll("div#geolocation-demo div#map").object().get(0);
 
         JsObject position = new JsObject().with("lat", coordinates.getLatitude())
                 .with("lng", coordinates.getLongitude());
