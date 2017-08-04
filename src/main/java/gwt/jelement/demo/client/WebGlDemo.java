@@ -25,14 +25,15 @@ As with the original code, this code is licensed under a Creative Commons Attrib
  */
 
 public class WebGlDemo extends AbstractDemo {
-    private WebGLUniformLocation pMatrixUniform;
-
-
     static {
         /* inject a matrix manipulation library */
         ScriptInjector.fromString(HtmlClientBundle.INSTANCE.getGlMatrixJs().getText())
                 .setWindow(ScriptInjector.TOP_WINDOW).inject();
     }
+
+    private final Float32Array mvMatrix = Mat4.create();
+    private final Float32Array pMatrix = Mat4.create();
+    private WebGLUniformLocation pMatrixUniform;
     private WebGLRenderingContext gl;
     private double viewportWidth;
     private double viewportHeight;
@@ -41,8 +42,6 @@ public class WebGlDemo extends AbstractDemo {
     private WebGLBuffer teapotVertexPositionBuffer;
     private WebGLBuffer teapotVertexTextureCoordBuffer;
     private WebGLBuffer teapotVertexIndexBuffer;
-    private final Float32Array mvMatrix = Mat4.create();
-    private final Float32Array pMatrix = Mat4.create();
     private double teapotAngle = 180;
     private double vertexPositionAttribute;
     private double vertexNormalAttribute;

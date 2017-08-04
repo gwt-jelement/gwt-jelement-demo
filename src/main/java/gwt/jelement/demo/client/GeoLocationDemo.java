@@ -54,9 +54,8 @@ public class GeoLocationDemo extends AbstractDemo {
     }
 
     private void ready() {
-        //FIXME
         HTMLDivElement mapContainer =
-                (HTMLDivElement) document.querySelectorAll("div#geolocation-demo div#map").object().get(0);
+                (HTMLDivElement) document.querySelectorAll("div#geolocation-demo div#map").item(0);
 
         JsObject position = new JsObject().with("lat", coordinates.getLatitude())
                 .with("lng", coordinates.getLongitude());
