@@ -3,7 +3,6 @@ package gwt.jelement.demo.client;
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.animation.KeyframeAnimationOptions;
 import gwt.jelement.animation.PlaybackDirection;
-import gwt.jelement.core.Array;
 import gwt.jelement.core.JsObject;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.html.HTMLDivElement;
@@ -18,10 +17,10 @@ public class ElementAnimateDemo extends AbstractDemo {
     protected void execute() {
         HTMLDivElement mainDiv = document.querySelector("div.clouds");
 
-        Array<JsObject<String>> cloudTransitions = new Array<>(
+        JsObject[] cloudTransitions = new JsObject[]{
                 new JsObject<String>().with("backgroundPosition", "0 302px"),
                 new JsObject<String>().with("backgroundPosition", "0 0")
-        );
+        };
         KeyframeAnimationOptions cloudAnimationOptions = new KeyframeAnimationOptions();
         cloudAnimationOptions.setDuration(10_000);
         cloudAnimationOptions.setIterations(Infinity);
@@ -33,10 +32,10 @@ public class ElementAnimateDemo extends AbstractDemo {
         logo.getStyle().setProperty("left", "20px");
         mainDiv.appendChild(logo);
 
-        Array<JsObject<String>> logoTransitions = new Array<>(
+        JsObject[] logoTransitions = new JsObject[]{
                 new JsObject<String>().with("transform", "translateY(0px)"),
                 new JsObject<String>().with("transform", "translateY(45px)")
-        );
+        };
         KeyframeAnimationOptions logoAnimationOptions = new KeyframeAnimationOptions();
         logoAnimationOptions.setDuration(4_000);
         logoAnimationOptions.setIterations(Infinity);
@@ -53,10 +52,10 @@ public class ElementAnimateDemo extends AbstractDemo {
         tickerDiv.appendChild(textDiv);
         mainDiv.appendChild(tickerDiv);
 
-        Array<JsObject<String>> tickerTransitions = new Array<>(
+        JsObject[] tickerTransitions = new JsObject[]{
                 new JsObject<String>().with("marginLeft", "100%"),
                 new JsObject<String>().with("marginLeft", "-1200px")
-        );
+        };
         KeyframeAnimationOptions tickerAnimationOptions = new KeyframeAnimationOptions();
         tickerAnimationOptions.setDuration(20_000);
         tickerAnimationOptions.setIterations(Infinity);

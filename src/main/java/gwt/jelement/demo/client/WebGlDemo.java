@@ -1,5 +1,6 @@
 package gwt.jelement.demo.client;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.core.*;
@@ -181,35 +182,37 @@ public class WebGlDemo extends AbstractDemo {
         request.open("GET", "Teapot.json");
         request.setOnReadystatechange(event -> {
             if (request.getReadyState() == XMLHttpRequest.DONE) {
-                handleLoadedTeapot(gl, (JsObject<?>) JSON.parse(request.getResponseText()));
+                Any.of(JSON.parse(request.getResponseText()))
+                        .<JsObject<Array<?>>>asObject(data-> handleLoadedTeapot(gl, data))
+                        .otherwise(v->console.log("Something went wrong, got ",v, ", expected an Array"));
             }
             return null;
         });
         request.send();
     }
 
-    private void handleLoadedTeapot(WebGLRenderingContext gl, JsObject<?> teapotData) {
+    private void handleLoadedTeapot(WebGLRenderingContext gl, JsObject<Array<?>> teapotData) {
         teapotVertexNormalBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexNormalBuffer);
-        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array((Array<?>) teapotData.get("vertexNormals")),
+        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(teapotData.get("vertexNormals")),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexNormalBufferItemSize = 3;
 
         teapotVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexTextureCoordBuffer);
-        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array((Array<?>) teapotData.get("vertexTextureCoords")),
+        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(teapotData.get("vertexTextureCoords")),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexTextureCoordBufferItemSize = 2;
 
         teapotVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, teapotVertexPositionBuffer);
-        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array((Array<?>) teapotData.get("vertexPositions")),
+        gl.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array(teapotData.get("vertexPositions")),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexPositionBufferItemSize = 3;
 
         teapotVertexIndexBuffer = gl.createBuffer();
         gl.bindBuffer(WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, teapotVertexIndexBuffer);
-        Array<?> indices = (Array<?>) teapotData.get("indices");
+        Array<?> indices = teapotData.get("indices");
         gl.bufferData(WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices),
                 WebGLRenderingContext.STATIC_DRAW);
         teapotVertexIndexBufferNumItems = indices.getLength();
