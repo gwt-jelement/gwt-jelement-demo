@@ -1,15 +1,16 @@
 package gwt.jelement.demo.client;
 
 import com.google.gwt.resources.client.TextResource;
-import elemental2.core.Array;
 import gwt.jelement.animation.KeyframeAnimationOptions;
 import gwt.jelement.animation.PlaybackDirection;
+import gwt.jelement.core.Array;
 import gwt.jelement.core.JsObject;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.html.HTMLDivElement;
 import gwt.jelement.html.HTMLImageElement;
 
-import static gwt.jelement.Browser.*;
+import static gwt.jelement.Browser.Infinity;
+import static gwt.jelement.Browser.document;
 
 public class ElementAnimateDemo extends AbstractDemo {
 

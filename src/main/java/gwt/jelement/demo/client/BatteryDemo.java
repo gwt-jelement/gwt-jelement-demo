@@ -1,12 +1,12 @@
 package gwt.jelement.demo.client;
 
 import com.google.gwt.resources.client.TextResource;
-import elemental2.promise.IThenable;
 import gwt.jelement.battery.BatteryManager;
 import gwt.jelement.core.Math;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.events.EventHandlerNonNull;
 import gwt.jelement.html.HTMLDivElement;
+import jsinterop.base.Any;
 
 import static gwt.jelement.Browser.document;
 import static gwt.jelement.Browser.navigator;
@@ -26,7 +26,7 @@ public class BatteryDemo extends AbstractDemo {
         }
     }
 
-    private <V> IThenable<V> setup(BatteryManager batteryManager) {
+    private Any setup(BatteryManager batteryManager) {
         this.batteryManager = batteryManager;
         EventHandlerNonNull updateEventHandler = event -> {
             updateStatus(batteryManager);

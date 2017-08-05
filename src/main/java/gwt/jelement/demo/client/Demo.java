@@ -8,12 +8,13 @@ import gwt.jelement.html.HTMLDivElement;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static gwt.jelement.Browser.*;
 
 public class Demo implements EntryPoint {
 
-    private final Map<String, AbstractDemo> demoMap = new HashMap<>();
+    private final Map<String, Supplier<AbstractDemo>> demoMap = new HashMap<>();
     private Element listing;
     private HTMLDivElement demoFrame;
     private AbstractDemo demo;
@@ -24,12 +25,12 @@ public class Demo implements EntryPoint {
         listing = document.getElementById("demo-listing");
         demoFrame = document.getElementById("demo-div");
 
-        addDemo(new BatteryDemo());
-        addDemo(new Canvas2DDemo());
-        addDemo(new ElementAnimateDemo());
-        addDemo(new GeoLocationDemo());
-        addDemo(new WebAudioDemo());
-        addDemo(new WebGlDemo());
+        addDemo(BatteryDemo::new);
+        addDemo(Canvas2DDemo::new);
+        addDemo(ElementAnimateDemo::new);
+        addDemo(GeoLocationDemo::new);
+        addDemo(WebAudioDemo::new);
+        addDemo(WebGlDemo::new);
 
         window.addEventListener("hashchange", event -> hashChanged());
         hashChanged();
@@ -39,19 +40,21 @@ public class Demo implements EntryPoint {
         if (demo != null) {
             demo.setInactive();
         }
-        demo = demoMap.get(location.getHash());
-        if (demo != null) {
+        Supplier<AbstractDemo> demoSuplier = demoMap.get(location.getHash());
+        if (demoSuplier != null) {
+            demo=demoSuplier.get();
             demo.execute(demoFrame);
         }
     }
 
-    private void addDemo(AbstractDemo demo) {
+    private void addDemo(Supplier<AbstractDemo> demoSupplier) {
         HTMLAnchorElement anchor = document.createElement("a");
-        String hash = "#" + demo.getName();
+        AbstractDemo demoInfo = demoSupplier.get();
+        String hash = "#" + demoInfo.getName();
         anchor.setAttribute("href", hash);
-        anchor.setInnerText(demo.getTitle());
+        anchor.setInnerText(demoInfo.getTitle());
         listing.appendChild(anchor);
-        demoMap.put(hash, demo);
+        demoMap.put(hash, demoSupplier);
     }
 
 }

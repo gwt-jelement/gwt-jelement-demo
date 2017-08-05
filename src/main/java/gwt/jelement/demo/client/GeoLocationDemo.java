@@ -9,8 +9,6 @@ import gwt.jelement.demo.client.jsinterop.GoogleMap;
 import gwt.jelement.demo.client.jsinterop.GoogleMapMarker;
 import gwt.jelement.geolocation.Coordinates;
 import gwt.jelement.geolocation.Geolocation;
-import gwt.jelement.geolocation.Position;
-import gwt.jelement.geolocation.PositionCallback;
 import gwt.jelement.html.HTMLDivElement;
 
 import static gwt.jelement.Browser.*;
@@ -43,7 +41,7 @@ public class GeoLocationDemo extends AbstractDemo {
             if (coordinates != null) {
                 ready();
             }
-            return undefined;
+            return null;
         });
 
         if (!scriptLoaded) {
@@ -57,13 +55,13 @@ public class GeoLocationDemo extends AbstractDemo {
         HTMLDivElement mapContainer =
                 (HTMLDivElement) document.querySelectorAll("div#geolocation-demo div#map").item(0);
 
-        JsObject position = new JsObject().with("lat", coordinates.getLatitude())
+        JsObject<?> position = new JsObject<>().with("lat", coordinates.getLatitude())
                 .with("lng", coordinates.getLongitude());
 
-        JsObject mapOptions = new JsObject().with("zoom", 10).with("center", position);
+        JsObject<?> mapOptions = new JsObject<>().with("zoom", 10).with("center", position);
         GoogleMap map = new GoogleMap(mapContainer, mapOptions);
 
-        JsObject markerOptions = new JsObject().with("position", position).with("map", map);
+        JsObject<?> markerOptions = new JsObject<>().with("position", position).with("map", map);
         new GoogleMapMarker(markerOptions);
     }
 

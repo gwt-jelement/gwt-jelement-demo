@@ -2,7 +2,6 @@
 <module rename-to="js">
 
   <inherits name="com.google.gwt.user.User" />
-  <inherits name="com.google.gwt.user.theme.standard.Standard" />
   <inherits name="gwt.jelement.JElement" />
 
   <entry-point class="gwt.jelement.demo.client.Demo" />

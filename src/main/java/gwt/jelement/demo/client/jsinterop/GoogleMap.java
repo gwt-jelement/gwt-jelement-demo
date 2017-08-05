@@ -8,5 +8,5 @@ import net.sourceforge.htmlunit.corejs.javascript.annotations.JSConstructor;
 @JsType(isNative = true, namespace = "google.maps", name="Map")
 public class GoogleMap {
     @JSConstructor
-    public GoogleMap(Element element, JsObject mapOptions){}
+    public GoogleMap(Element element, JsObject<?> mapOptions){}
 }

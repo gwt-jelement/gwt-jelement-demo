@@ -8,5 +8,5 @@ import net.sourceforge.htmlunit.corejs.javascript.annotations.JSConstructor;
 public class GoogleMapMarker {
 
     @JSConstructor
-    public GoogleMapMarker(JsObject options){}
+    public GoogleMapMarker(JsObject<?> options){}
 }
