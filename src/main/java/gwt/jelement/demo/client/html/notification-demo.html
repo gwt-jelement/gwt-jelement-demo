@@ -1,10 +1,13 @@
 <div style="width: calc(100% - 500px); vertical-align: top;margin-bottom: 20px">
     <h3>Notification demo</h3>
-    <p>Because it is not running in a background worker, this demo only works on Chrome, but would otherwise run on many
-        modern
-        browswers. If you grant permission to this website, you will see a notification only when you visit this page.
+    <p>
+        If you grant permission to this website, you will see a notification only when you visit this page, as the
+        notification code is not running inside a background worker. This demo works on all modern browsers (IE 11
+        is not a modern browser), although the notifications may display differently on each browser.
     </p>
     <div>
         <span class="label label-primary">Notification</span>
+        <span class="label label-primary">Promise</span>
+        <span class="label label-primary">Feature detection</span>
     </div>
 </div>
