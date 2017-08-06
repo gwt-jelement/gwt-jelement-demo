@@ -1,0 +1,68 @@
+<style>
+    #demoContainer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #svgElement {
+        border: 1px solid #404040;
+        margin: 4px 0 4px 4px;
+        cursor: default;
+    }
+
+    #toolbar {
+        margin: 4px 0 4px 0;
+        display: inline-flex;
+        flex-direction: column;
+        width: 45px;
+        background-color: #e0e0e0;
+        border: 1px solid #404040;
+        border-left: 0;
+    }
+
+    #btnRedo, #btnUndo, #colorPicker, #btnDownload {
+        width: 44px;
+        height: 36px;
+    }
+
+    button[disabled] img {
+        opacity: 0.3;
+    }
+
+    #name {
+        width: 110px;
+        font-size: 16pt;
+        font-weight: bold;
+        white-space: nowrap;
+        transform: translate(-31%, 200%) rotate(-90deg);
+        text-shadow: -1px -1px white, -1px -1px white, -1px -1px white, -1px -1px white;
+        color: #2a4194;
+    }
+
+</style>
+
+<div id="demoContainer">
+    <svg xmlns="http://www.w3.org/2000/svg"  version="1.1" id="svgElement" x="0px" y="0px" width="300px" height="300px" viewBox="0 0 300 300" enable-background="new 0 0 600 400" xml:space="preserve">
+</svg>
+    <div id="toolbar">
+        <input type="color" id="colorPicker" value="#000080">
+        <button id="btnUndo" disabled title="Undo"><img src="undo.png"></button>
+        <button id="btnRedo" disabled title="Redo"><img src="redo.png"></button>
+        <button id="btnDownload" title="Download"><img src="download.png"></button>
+        <div id="name">SVG Draw</div>
+    </div>
+    <div style="width: calc(100% - 500px); vertical-align: top;margin-left: 30px">
+        <h3>SVG demo</h3>
+        <p>This is a freehand drawing tool that creates SVG drawings. You can download the drawing once you are
+            done. The line smoothing code comes from an excellent <a href=" https://stackoverflow.com/a/40700068/80075" target="_blank">
+                answer on Stack Overflow</a>.
+        </p>
+        <p>This demo works on all modern browsers, and on IE 11 with reduced features.
+        </p>
+        <div>
+            <span class="label label-primary">SVG</span>
+            <span class="label label-primary">DOM</span>
+            <span class="label label-primary">Blob</span>
+        </div>
+    </div>
+</div>

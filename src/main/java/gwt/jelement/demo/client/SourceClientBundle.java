@@ -25,4 +25,10 @@ public interface SourceClientBundle extends ClientBundle {
 
     @Source("BatteryDemo.java")
     TextResource getBatterySource();
+
+    @Source("NotificationDemo.java")
+    TextResource getNotificationSource();
+
+    @Source("SvgDemo.java")
+    TextResource getSvgSource();
 }

@@ -30,6 +30,12 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("battery.html")
     TextResource getBatteryHtml();
 
+    @Source("svg.html")
+    TextResource getSvgHtml();
+
+    @Source("notification-demo.html")
+    TextResource getNotificationHtml();
+
     @Source("glmatrix.0.9.5.min.js")
     TextResource getGlMatrixJs();
 

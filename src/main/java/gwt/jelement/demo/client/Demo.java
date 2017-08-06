@@ -29,6 +29,8 @@ public class Demo implements EntryPoint {
         addDemo(Canvas2DDemo::new);
         addDemo(ElementAnimateDemo::new);
         addDemo(GeoLocationDemo::new);
+        addDemo(NotificationDemo::new);
+        addDemo(SvgDemo::new);
         addDemo(WebAudioDemo::new);
         addDemo(WebGlDemo::new);
 

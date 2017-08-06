@@ -78,10 +78,12 @@ public class BatteryDemo extends AbstractDemo {
 
     @Override
     protected void setInactive() {
-        batteryManager.setOnDischargingtimechange(null);
-        batteryManager.setOnLevelchange(null);
-        batteryManager.setOnChargingtimechange(null);
-        batteryManager.setOnChargingchange(null);
+        if (batteryManager!=null) {
+            batteryManager.setOnDischargingtimechange(null);
+            batteryManager.setOnLevelchange(null);
+            batteryManager.setOnChargingtimechange(null);
+            batteryManager.setOnChargingchange(null);
+        }
         super.setInactive();
     }
 
