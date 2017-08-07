@@ -5,8 +5,10 @@ import gwt.jelement.core.Array;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
 import gwt.jelement.dom.ClientRect;
 import gwt.jelement.dom.Element;
+import gwt.jelement.dom.Touch;
 import gwt.jelement.dom.URL;
 import gwt.jelement.events.MouseEvent;
+import gwt.jelement.events.TouchEvent;
 import gwt.jelement.fileapi.Blob;
 import gwt.jelement.fileapi.BlobPropertyBag;
 import gwt.jelement.html.HTMLAnchorElement;
@@ -17,8 +19,7 @@ import gwt.jelement.svg.SVGPathElement;
 
 import java.util.ArrayList;
 
-import static gwt.jelement.Browser.document;
-import static gwt.jelement.Browser.navigator;
+import static gwt.jelement.Browser.*;
 
 public class SvgDemo extends AbstractDemo {
     /*
@@ -40,16 +41,20 @@ public class SvgDemo extends AbstractDemo {
         HTMLButtonElement btnDownload = document.getElementById("btnDownload");
         HTMLInputElement colorPicker = document.getElementById("colorPicker");
 
-        if (isIE()){
-            HTMLDivElement toolbar=document.getElementById("toolbar");
+        if (isIE()) {
+            HTMLDivElement toolbar = document.getElementById("toolbar");
             toolbar.removeChild(btnDownload);
             toolbar.removeChild(colorPicker);
         }
 
-        strokeColor=colorPicker.getValue();
+        strokeColor = colorPicker.getValue();
 
         ArrayList<SVGPathElement> undoBuffer = new ArrayList<>();
         ArrayList<SVGPathElement> redoBuffer = new ArrayList<>();
+
+        svgElement.addEventListener("touchstart", event -> this.mapTouchEvent((TouchEvent) event, "mousedown"));
+        svgElement.addEventListener("touchmove", event -> this.mapTouchEvent((TouchEvent) event, "mousemove"));
+        svgElement.addEventListener("touchend", event -> this.mapTouchEvent((TouchEvent) event, "mouseup"));
 
         svgElement.addEventListener("mousedown", event -> {
             rect = svgElement.getBoundingClientRect();
@@ -122,8 +127,23 @@ public class SvgDemo extends AbstractDemo {
         colorPicker.addEventListener("change", event -> strokeColor = colorPicker.getValue());
     }
 
+    private void mapTouchEvent(TouchEvent event, String type) {
+        event.preventDefault();
+        if (event.getTouches().getLength() > 1 || ("touchend".equals(event.getType()) &&
+                event.getTouches().getLength() > 0))
+            return;
+        Touch touch = event.getChangedTouches().get(0);
+        MouseEvent newEvent = (MouseEvent) document.createEvent("MouseEvents");
+        newEvent.initMouseEvent(type, true, true, window, 0,
+                touch.getScreenX(), touch.getScreenY(), touch.getClientX(), touch.getClientY(),
+                event.getCtrlKey(), event.getAltKey(), event.getShiftKey(), event.getMetaKey(),
+                (short) 0, null);
+        event.getTarget().dispatchEvent(newEvent);
+
+    }
+
     private boolean isIE() {
-        return "Microsoft Internet Explorer".equals(navigator.getAppName())||
+        return "Microsoft Internet Explorer".equals(navigator.getAppName()) ||
                 ("Netscape".equals(navigator.getAppName()) && navigator.getUserAgent().contains("Trident/"));
     }
 
@@ -162,12 +182,12 @@ public class SvgDemo extends AbstractDemo {
 
         if (point != null) {
             strPath += " L" + point.x + " " + point.y;
-            String tmpPath = "";
+            StringBuilder tmpPath = new StringBuilder();
             for (int offset = 2; offset < buffer.size(); offset += 2) {
                 point = getAveragePoint(offset);
-                tmpPath += " L" + point.x + " " + point.y;
+                tmpPath.append(" L").append(point.x).append(" ").append(point.y);
             }
-            path.setAttribute("d", strPath + tmpPath);
+            path.setAttribute("d", strPath + tmpPath.toString());
         }
     }
 
