@@ -19,8 +19,11 @@ public class SpeechSynthesisDemo extends AbstractDemo {
             window.alert("no support for speech synthesis");
             return;
         }
-        window.getSpeechSynthesis().cancel();
-        getVoicesReady().then($ -> {
+        /* FIXME isPending*/
+        if (window.getSpeechSynthesis().getPending()){
+            window.getSpeechSynthesis().cancel();
+        }
+        getVoicesReady().then(x -> {
             intro();
             return null;
         });
@@ -84,6 +87,7 @@ public class SpeechSynthesisDemo extends AbstractDemo {
                 resolve.with(null);
             } else if (window.getSpeechSynthesis().object().has("onvoiceschanged")) {
                 window.getSpeechSynthesis().setOnVoiceschanged(event -> {
+                    window.getSpeechSynthesis().setOnVoiceschanged(null);
                     if (window.getSpeechSynthesis().getVoices().length != 0) {
                         resolve.with(null);
                     } else {
@@ -123,19 +127,19 @@ public class SpeechSynthesisDemo extends AbstractDemo {
                 .filter(voice -> voice.getLang().contains(language))
                 .toArray(SpeechSynthesisVoice[]::new);
         if (candidates.length != 0) {
-            for (SpeechSynthesisVoice candidate : candidates) {
-                if (predicate.test(candidate)) {
-                    return candidate;
-                }
-            }
-            return candidates[0];
+            return Arrays.stream(candidates)
+                    .filter(predicate)
+                    .findFirst()
+                    .orElse(candidates[0]);
         }
         return null;
     }
 
     @Override
     void setInactive() {
-        window.getSpeechSynthesis().cancel();
+        if (window.getSpeechSynthesis().getSpeaking()|| window.getSpeechSynthesis().getPending()){
+            window.getSpeechSynthesis().cancel();
+        }
         super.setInactive();
     }
 

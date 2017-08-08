@@ -87,6 +87,7 @@
                 <configuration>
                     <generateJsInteropExports>true</generateJsInteropExports>
                     <runTarget>index.html</runTarget>
+                    <style>detailed</style>
                     <modules>
                         <module>gwt.jelement.demo.Demo</module>
                     </modules>

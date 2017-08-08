@@ -4,3 +4,11 @@
     latest version of modern browsers</a>, although with different capabilities. Be sure to try out
     the demo on Chrome and another browser like Edge or Firefox.
 </p>
+<p style="max-width: calc(100% - 100px)">
+    Note that there is a bug in the Chrome implementation of <code>SpeechSynthesizer::cancel</code> which makes it
+    nearly useless
+    in clearing queued utterances. A better implementation would queue one untterance at a time, and use the
+    <code>onend</code> event of the <code>SpeechSynthesisUtterance</code> to queue the next one. As it is with
+    the current code, if you stop and start the demo by exiting before it is done, you will get utterances
+    interleaved with each other. The only cure is to restart the browser, reload will not have any effect.
+</p>
