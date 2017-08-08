@@ -36,6 +36,9 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("notification-demo.html")
     TextResource getNotificationHtml();
 
+    @Source("speech-synth.html")
+    TextResource getSpeechSynthHtml();
+
     @Source("glmatrix.0.9.5.min.js")
     TextResource getGlMatrixJs();
 

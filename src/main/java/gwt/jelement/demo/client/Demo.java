@@ -30,6 +30,7 @@ public class Demo implements EntryPoint {
         addDemo(ElementAnimateDemo::new);
         addDemo(GeoLocationDemo::new);
         addDemo(NotificationDemo::new);
+        addDemo(SpeechSynthesisDemo::new);
         addDemo(SvgDemo::new);
         addDemo(WebAudioDemo::new);
         addDemo(WebGlDemo::new);

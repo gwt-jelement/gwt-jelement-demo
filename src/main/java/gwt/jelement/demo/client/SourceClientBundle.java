@@ -31,4 +31,8 @@ public interface SourceClientBundle extends ClientBundle {
 
     @Source("SvgDemo.java")
     TextResource getSvgSource();
+
+    @Source("SpeechSynthesisDemo.java")
+    TextResource getSpeechSynthesisSource();
+
 }
