@@ -44,7 +44,7 @@ public class BatteryDemo extends AbstractDemo {
             HTMLDivElement batteryInner = document.querySelector(".battery-inner");
             String statusString;
             double level = Math.trunc(100 * batteryManager.getLevel());
-            if (batteryManager.getCharging()) {
+            if (batteryManager.isCharging()) {
                 statusString = "Plugged in, " + level + "%<br>" + toTimString(batteryManager.getChargingTime());
             } else {
                 statusString = ("On Battery, " + level +

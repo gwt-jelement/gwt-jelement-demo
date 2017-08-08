@@ -19,12 +19,14 @@ public class SpeechSynthesisDemo extends AbstractDemo {
             window.alert("no support for speech synthesis");
             return;
         }
-        /* FIXME isPending*/
-        if (window.getSpeechSynthesis().getPending()){
+        if (window.getSpeechSynthesis().isPending()) {
             window.getSpeechSynthesis().cancel();
         }
         getVoicesReady().then(x -> {
             intro();
+            return null;
+        }).catch_(error -> {
+            window.alert(((Error) error).getMessage());
             return null;
         });
     }
@@ -42,31 +44,31 @@ public class SpeechSynthesisDemo extends AbstractDemo {
         say("Hello. Welcome to the speech synthesis demo.", maleUSVoice);
         say("You sound like a robot. I think I sound better.", femaleUSVoice);
         boolean otherLanguages =
-                say("Actually, everything sounds better with a British accent, don't you think?", "en-GB");
+                say("en-GB", "Actually, everything sounds better with a British accent, don't you think?");
         otherLanguages = otherLanguages |
-                say("Sur Chrome, nous pouvons parler de nombreuses langues.", "fr");
+                say("fr", "Sur Chrome, nous pouvons parler de nombreuses langues.");
         otherLanguages = otherLanguages |
-                say("Como el español por ejemplo.", "es-US");
+                say("es-US", "Como el español por ejemplo.");
         otherLanguages = otherLanguages |
-                say("O el típico español de España, soy de Zaragoza.", "es-ES");
-        say("Que dices mujer? Que mi español no es típico? , Soy de Monterrey, Mejico!", "es-US");
+                say("es-ES", "O el típico español de España.", "Yo soy de Zaragoza!");
+        say("es-US", "Que dices mujer?", "Que mi español no es típico?", "Yo soy de Monterrey, Mejico!");
         otherLanguages = otherLanguages |
-                say("Non dimenticare di me! parlo italiano", "it");
+                say("it", "Non dimenticare di me! parlo italiano");
         otherLanguages = otherLanguages |
-                say("Und ich spreche deutsch.", "de");
+                say("de", "Und ich spreche deutsch.");
         otherLanguages = otherLanguages |
-                say("我可以说中文.", "zh");
+                say("zh", "我可以说中文.");
         otherLanguages = otherLanguages |
-                say("나는 한국어를 할 수있다.", "ko");
+                say("ko", "나는 한국어를 할 수 있습니다.");
         otherLanguages = otherLanguages |
-                say("И я говорю по-русски.", "ru");
-        say("I can even speak English with a French accent. C'est amusant, ça?", "fr");
-        say("Il y a aussi d'autres langues, mais ça devient un peu ennuyeux...", "fr");
-        say("Ei, espere um pouco, você conseguiu ignorar o português? Bra,sil, Bra, sil, Bra, sil,", "pt");
+                say("ru", "И я говорю по-русски.");
+        say("fr", "I can even speak English with a French accent.", "C'est amusant, ça!");
+        say("fr", "Il y a aussi d'autres langues, mais ça devient un peu ennuyeux...");
+        say("pt", "Ei, espere um pouco, você conseguiu ignorar o português?", " Braaaasil!", "Braaaasil!", "Braaaasil!");
         if (maleUkVoice != null) {
             say("I want to hear other languages!", maleUkVoice);
         } else {
-            say("I want to hear other languages!", "en-GB");
+            say("en-GB", "I want to hear other languages!");
         }
         if (!otherLanguages) {
             say("Guess what, we can only speak American English.", maleUSVoice);
@@ -101,11 +103,13 @@ public class SpeechSynthesisDemo extends AbstractDemo {
         });
     }
 
-    private boolean say(String text, String language) {
+    private boolean say(String language, String... text) {
         if (isLanguageSupported(language)) {
-            SpeechSynthesisUtterance utterance = new SpeechSynthesisUtterance(text);
-            utterance.setLang(language);
-            window.getSpeechSynthesis().speak(utterance);
+            for (String phrase : text) {
+                SpeechSynthesisUtterance utterance = new SpeechSynthesisUtterance(phrase);
+                utterance.setLang(language);
+                window.getSpeechSynthesis().speak(utterance);
+            }
             return true;
         }
         return false;
@@ -137,7 +141,7 @@ public class SpeechSynthesisDemo extends AbstractDemo {
 
     @Override
     void setInactive() {
-        if (window.getSpeechSynthesis().getSpeaking()|| window.getSpeechSynthesis().getPending()){
+        if (window.getSpeechSynthesis().isSpeaking() || window.getSpeechSynthesis().isPending()) {
             window.getSpeechSynthesis().cancel();
         }
         super.setInactive();

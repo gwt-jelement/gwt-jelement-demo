@@ -1,6 +1,5 @@
 package gwt.jelement.demo.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.core.*;
@@ -183,8 +182,8 @@ public class WebGlDemo extends AbstractDemo {
         request.setOnReadystatechange(event -> {
             if (request.getReadyState() == XMLHttpRequest.DONE) {
                 Any.of(JSON.parse(request.getResponseText()))
-                        .<JsObject<Array<?>>>asObject(data-> handleLoadedTeapot(gl, data))
-                        .otherwise(v->console.log("Something went wrong, got ",v, ", expected an Array"));
+                        .<JsObject<Array<?>>>asObject(data -> handleLoadedTeapot(gl, data))
+                        .otherwise(v -> console.log("Something went wrong, got ", v, ", expected an Array"));
             }
             return null;
         });

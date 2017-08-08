@@ -112,7 +112,7 @@ public class SvgDemo extends AbstractDemo {
             /* https://stackoverflow.com/a/38019175/80075 */
             String svgData = svgElement.getOuterHTML();
             BlobPropertyBag blobProperties = new BlobPropertyBag();
-            blobProperties.set("type", "image/svg+xml;charset=utf-8");
+            blobProperties.setType("image/svg+xml;charset=utf-8");
             Blob svgBlob = new Blob(new Array<>(svgData), blobProperties);
 
             String svgUrl = URL.createObjectURL(svgBlob);
@@ -136,7 +136,7 @@ public class SvgDemo extends AbstractDemo {
         MouseEvent newEvent = (MouseEvent) document.createEvent("MouseEvents");
         newEvent.initMouseEvent(type, true, true, window, 0,
                 touch.getScreenX(), touch.getScreenY(), touch.getClientX(), touch.getClientY(),
-                event.getCtrlKey(), event.getAltKey(), event.getShiftKey(), event.getMetaKey(),
+                event.isCtrlKey(), event.isAltKey(), event.isShiftKey(), event.isMetaKey(),
                 (short) 0, null);
         event.getTarget().dispatchEvent(newEvent);
 
