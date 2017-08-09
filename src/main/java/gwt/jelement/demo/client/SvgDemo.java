@@ -185,7 +185,9 @@ public class SvgDemo extends AbstractDemo {
             StringBuilder tmpPath = new StringBuilder();
             for (int offset = 2; offset < buffer.size(); offset += 2) {
                 point = getAveragePoint(offset);
-                tmpPath.append(" L").append(point.x).append(" ").append(point.y);
+                if (point != null) {
+                    tmpPath.append(" L").append(point.x).append(" ").append(point.y);
+                }
             }
             path.setAttribute("d", strPath + tmpPath.toString());
         }

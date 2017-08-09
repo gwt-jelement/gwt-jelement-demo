@@ -1,0 +1,83 @@
+<style>
+    #demoContainer {
+        display: flex;
+        flex-direction: row;
+        height: 380px;
+    }
+
+    #timing {
+        width: 300px;
+        margin: 4px 0;
+    }
+
+    .two-columns {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #timing div {
+        padding: 0 2px;
+    }
+
+    #timing div:nth-child(2n+1) {
+        width: 70%;
+    }
+
+    #timing div:nth-child(2n) {
+        width: 30%;
+        text-align: right;
+    }
+
+    .two-columns div:nth-child(2n) {
+        flex-grow: 1;
+    }
+
+    .two-columns.striped div:nth-child(4n-1), #timing div:nth-child(4n) {
+        background-color: #f0f0f0;
+    }
+
+    div.header {
+        background-color: #404040;
+        color: white;
+    }
+
+    #navigationInfo, #memoryInfo {
+        width: 300px;
+        display: inline-block;
+        vertical-align: top;
+        margin: 30px 10px;
+    }
+
+
+</style>
+
+<div id="demoContainer">
+    <div id="timing" class="two-columns striped">
+        <div class="header">Event</div>
+        <div class="header">Time elapsed</div>
+
+    </div>
+    <div style="width: calc(100% - 500px); vertical-align: top;margin-left: 30px">
+        <h3>Performance API Demo</h3>
+        <p>The Performance API is available on all modern browsers and IE 11. On Chrome it additionally
+            provides memory information. The performance timing display code was intentionally written to demonstrate
+            accessing properties through an object's property descriptors. This code was also intentionally written
+            using two methods not supported in IE 11 (<code>Object.entries</code> and
+            <code>Object.getOwnPropertyDescriptors</code>, to demonstrate two ways of creating polyfills with
+            gwt-jelement.
+        </p>
+        <div>
+            <span class="label label-primary">Performance API</span>
+            <span class="label label-primary">Property descriptors</span>
+            <span class="label label-primary">Polyfill</span>
+        </div>
+        <div id="navigationInfo">
+            <div class="header">Navigation Info</div>
+
+        </div>
+        <div id="memoryInfo">
+            <div class="header">Memory Info</div>
+        </div>
+    </div>
+</div>

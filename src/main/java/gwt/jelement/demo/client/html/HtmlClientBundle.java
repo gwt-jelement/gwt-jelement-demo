@@ -39,6 +39,9 @@ public interface HtmlClientBundle extends ClientBundle {
     @Source("speech-synth.html")
     TextResource getSpeechSynthHtml();
 
+    @Source("performance.html")
+    TextResource getPerformanceHtml();
+
     @Source("glmatrix.0.9.5.min.js")
     TextResource getGlMatrixJs();
 

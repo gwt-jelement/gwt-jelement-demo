@@ -35,4 +35,6 @@ public interface SourceClientBundle extends ClientBundle {
     @Source("SpeechSynthesisDemo.java")
     TextResource getSpeechSynthesisSource();
 
+    @Source("PerformanceDemo.java")
+    TextResource getPerformanceSource();
 }
