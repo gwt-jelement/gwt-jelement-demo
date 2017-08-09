@@ -2,10 +2,12 @@ package gwt.jelement.demo.client;
 
 import com.google.gwt.resources.client.TextResource;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
+import gwt.jelement.dom.Element;
 import gwt.jelement.events.Event;
 import gwt.jelement.webaudio.*;
 
 import static gwt.jelement.Browser.document;
+import static gwt.jelement.Browser.window;
 
 public class WebAudioDemo extends AbstractDemo {
 
@@ -19,6 +21,13 @@ public class WebAudioDemo extends AbstractDemo {
 
     @Override
     protected void execute() {
+        boolean audioSupported=window.object().has("AudioContext");
+        if (!audioSupported){
+            Element demoDiv = document.getElementById("demoDiv");
+            demoDiv.getParentElement().removeChild(demoDiv);
+            window.alert("Web audio is not supported in this browser");
+            return;
+        }
         /*
             Audio Synthesis in JavaScript
             Brian Rinaldi

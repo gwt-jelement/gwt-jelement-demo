@@ -13,9 +13,12 @@ import static gwt.jelement.Browser.window;
 
 public class SpeechSynthesisDemo extends AbstractDemo {
 
+    private boolean spechSyntheisSupported;
+
     @Override
     protected void execute() {
-        if (!window.object().has("speechSynthesis")) {
+        this.spechSyntheisSupported=window.object().has("speechSynthesis");
+        if (!spechSyntheisSupported) {
             window.alert("no support for speech synthesis");
             return;
         }
@@ -45,23 +48,15 @@ public class SpeechSynthesisDemo extends AbstractDemo {
         say("You sound like a robot. I think I sound better.", femaleUSVoice);
         boolean otherLanguages =
                 say("en-GB", "Actually, everything sounds better with a British accent, don't you think?");
-        otherLanguages = otherLanguages |
-                say("fr", "Sur Chrome, nous pouvons parler de nombreuses langues.");
-        otherLanguages = otherLanguages |
-                say("es-US", "Como el español por ejemplo.");
-        otherLanguages = otherLanguages |
-                say("es-ES", "O el típico español de España.", "Yo soy de Zaragoza!");
+        otherLanguages = otherLanguages | say("fr", "Sur Chrome, nous pouvons parler de nombreuses langues.");
+        otherLanguages = otherLanguages | say("es-US", "Como el español por ejemplo.");
+        otherLanguages = otherLanguages | say("es-ES", "O el típico español de España.", "Yo soy de Zaragoza!");
         say("es-US", "Que dices mujer?", "Que mi español no es típico?", "Yo soy de Monterrey, Mejico!");
-        otherLanguages = otherLanguages |
-                say("it", "Non dimenticare di me! parlo italiano");
-        otherLanguages = otherLanguages |
-                say("de", "Und ich spreche deutsch.");
-        otherLanguages = otherLanguages |
-                say("zh", "我可以说中文.");
-        otherLanguages = otherLanguages |
-                say("ko", "나는 한국어를 할 수 있습니다.");
-        otherLanguages = otherLanguages |
-                say("ru", "И я говорю по-русски.");
+        otherLanguages = otherLanguages | say("it", "Non dimenticare di me! parlo italiano");
+        otherLanguages = otherLanguages | say("de", "Und ich spreche deutsch.");
+        otherLanguages = otherLanguages | say("zh", "我可以说中文.");
+        otherLanguages = otherLanguages | say("ko", "나는 한국어를 할 수 있습니다.");
+        otherLanguages = otherLanguages | say("ru", "И я говорю по-русски.");
         say("fr", "I can even speak English with a French accent.", "C'est amusant, ça!");
         say("fr", "Il y a aussi d'autres langues, mais ça devient un peu ennuyeux...");
         say("pt", "Ei, espere um pouco, você conseguiu ignorar o português?", " Braaaasil!", "Braaaasil!", "Braaaasil!");
@@ -141,7 +136,8 @@ public class SpeechSynthesisDemo extends AbstractDemo {
 
     @Override
     void setInactive() {
-        if (window.getSpeechSynthesis().isSpeaking() || window.getSpeechSynthesis().isPending()) {
+        if (spechSyntheisSupported &&
+                (window.getSpeechSynthesis().isSpeaking() || window.getSpeechSynthesis().isPending())) {
             window.getSpeechSynthesis().cancel();
         }
         super.setInactive();

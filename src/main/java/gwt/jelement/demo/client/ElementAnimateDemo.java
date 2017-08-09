@@ -5,6 +5,7 @@ import gwt.jelement.animation.KeyframeAnimationOptions;
 import gwt.jelement.animation.PlaybackDirection;
 import gwt.jelement.core.JsObject;
 import gwt.jelement.demo.client.html.HtmlClientBundle;
+import gwt.jelement.dom.Element;
 import gwt.jelement.html.HTMLDivElement;
 import gwt.jelement.html.HTMLImageElement;
 
@@ -16,6 +17,14 @@ public class ElementAnimateDemo extends AbstractDemo {
     @Override
     protected void execute() {
         HTMLDivElement mainDiv = document.querySelector("div.clouds");
+
+        if (!mainDiv.object().has("animate")){
+            mainDiv.getClassList().remove("clouds");
+            Element heading=document.createElement("h3");
+            heading.appendChild(document.createTextNode("Element.animate() is not supported in this browser."));
+            mainDiv.appendChild(heading);
+            return;
+        }
 
         JsObject[] cloudTransitions = new JsObject[]{
                 new JsObject<String>().with("backgroundPosition", "0 302px"),

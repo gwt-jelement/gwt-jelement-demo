@@ -11,7 +11,8 @@ import gwt.jelement.timing.PerformanceTiming;
 
 import java.util.*;
 
-import static gwt.jelement.Browser.*;
+import static gwt.jelement.Browser.document;
+import static gwt.jelement.Browser.window;
 
 public class PerformanceDemo extends AbstractDemo {
     @Override
@@ -31,13 +32,15 @@ public class PerformanceDemo extends AbstractDemo {
         if (performance.getMemory() != null) { /*Chrome only*/
             showMemoryInfo(performance.getMemory(), memoryInfoDiv);
         } else {
-            memoryInfoDiv.getParentElement().removeChild(memoryInfoDiv);/* for IE 11*/
+            /* for IE 11, otherwise memoryInfoDiv.remove() would have sufficed */
+            memoryInfoDiv.getParentElement().removeChild(memoryInfoDiv);
         }
     }
 
     private void showPerformanceTiming(PerformanceTiming timing) {
         Map<String, Double> timingMap = new HashMap<>();
-        JsObject<ObjectPropertyDescriptor> propertyDescriptors = JsObject.getOwnPropertyDescriptors(timing.object().get__proto__());
+        JsObject<ObjectPropertyDescriptor> propertyDescriptors =
+                JsObject.getOwnPropertyDescriptors(timing.object().get__proto__());
         for (Object[] entry : JsObject.entries(propertyDescriptors)) {
             String propertyName = (String) entry[0];
             ObjectPropertyDescriptor descriptor = (ObjectPropertyDescriptor) entry[1];
@@ -113,9 +116,11 @@ public class PerformanceDemo extends AbstractDemo {
         if (!Js.has(JsObject.prototype.getConstructor().object(), "entries")) {
             JsObject.prototype.set("entries",
                     new Function("obj",
-                            "return Object.keys(obj).reduce(function(e, k){return e.concat(typeof k === 'string' && obj.propertyIsEnumerable(k) ?[[k, obj[k]]] : []);}, []);"));
+                            "return Object.keys(obj).reduce(function(e, k){" +
+                                    "return e.concat(typeof k === 'string' && obj.propertyIsEnumerable(k)?" +
+                                    "[[k, obj[k]]] : []);}, []);"));
         }
-        /* Alternative using Java only
+        /* One simple alternative using Java only
          if (!Js.has(JsObject.prototype.getConstructor().object(), "entries")) {
             JsObject.prototype.set("entries", new CallbackFunction() {
                 @Override
